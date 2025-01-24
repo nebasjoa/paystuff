@@ -28,6 +28,10 @@
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
                 <p style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px;">Encryption password:</strong>
+                    <input type="text" class="simple-input" v-model="secret_test">
+                </p>
+                <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Merchant ID:</strong>
                     <input type="text" class="simple-input" v-model="merchantid">
                 </p>
@@ -135,7 +139,7 @@ import Navbar from '@/components/Navbar.vue'
 export default {
     data() {
         return {
-            merchantid: 'npesic_test',
+            merchantid: '',
             transid: '',
             amount: '1000',
             currency: 'EUR',
@@ -143,7 +147,7 @@ export default {
             urlsuccess: 'http://127.0.0.1:3005/success',
             urlfailure: 'http://127.0.0.1:3005/failure',
             urlnotify: 'http://127.0.0.1:3005/urlnotify',
-            secret_test: '-*CB4*[0[Xcx9ZER',
+            secret_test: '',
             encrypted_data: '',
             plain_text: '',
             len: 0,

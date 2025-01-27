@@ -1,7 +1,8 @@
 <template>
+    <Header />
     <Navbar />
     <div class="main-wrapper">
-        <div class="wrapper">
+        <div class="wrapper narrower">
             <h1>Paygate Playground</h1>
             <div class="parameters">
                 <p style="margin: 2px;">
@@ -20,7 +21,7 @@
                         <option value="paytweak">paytweak</option>
                         <option value="mandate">EasyCollect</option>
                         <option value="direct">S2S</option>
-                        <option value="SimplePay">SimplePay</option>
+                        <option value="simplepay">SimplePay</option>
                     </select>
                 </p>
                 <hr style="opacity: .2;">
@@ -99,6 +100,10 @@
                             v-model="threeDsData"></textarea>
                     </div>
                 </div>
+                <p style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px;">Other parameters:</strong>
+                    <input type="text" class="simple-input" v-model="otherparams" disabled>
+                </p>
                 <hr style="opacity: .2;">
                 <h3>Unencrypted parameters:</h3>
                 <p style="margin: 2px;">
@@ -132,7 +137,7 @@
             </div>
         </div>
         <div style="margin: 0;">
-            <div class="wrapper">
+            <div class="wrapper wider">
                 <h3>Some Payment calls (click on button below to open in a new tab)</h3>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <strong style="display: inline-block; width: 150px;">{{ this.paytype }}:</strong>
@@ -140,17 +145,20 @@
                     <a v-if="isDataEncrypted" :href=testurl target="_blank">Call {{ this.paytype }}</a>
                 </div>
             </div>
-            <div v-if="isDataEncrypted" class="wrapper">
-                <iframe :src="testurl" width="700" height="650" ref="paymentIframe" @load="onIframeLoad"></iframe>
+            <div v-if="isDataEncrypted" class="wrapper wider">
+                <iframe :src="testurl" width="850" height="650" ref="paymentIframe" @load="onIframeLoad"></iframe>
             </div>
         </div>
     </div>
+<LoginModal />
 </template>
 
 <script>
 import CryptoJS from "crypto-js";
 import axios from 'axios'
 import Navbar from '@/components/Navbar.vue'
+import LoginModal from "@/components/LoginModal.vue";
+import Header from "@/components/Header.vue";
 export default {
     data() {
         return {
@@ -183,7 +191,9 @@ export default {
         }
     },
     components: {
-        Navbar
+        Header,
+        Navbar,
+        LoginModal
     },
     computed: {
         hmac_data() {
@@ -257,6 +267,9 @@ export default {
             } else if (this.paytype === 'direct') {
                 this.isDataEncrypted = false
                 return 'direct'
+            } else if (this.paytype === 'simplepay') {
+                this.isDataEncrypted = false
+                return 'simplepay'
             }
             else {
                 this.isDataEncrypted = false
@@ -326,10 +339,11 @@ export default {
 <style scoped>
 .main-wrapper {
     display: flex;
-    width: 1200px;
+    width: 1500px;
     margin: auto;
     gap: 20px;
     margin-top: 10px;
+    position: relative;
 }
 
 .wrapper {
@@ -340,6 +354,15 @@ export default {
     border-radius: 10px;
     margin-top: 0;
     margin-bottom: 20px;
+}
+
+.narrower {
+    width: 500px;
+    margin-left: 0;
+}
+
+.wider {
+    width: 850px;
 }
 
 select {
@@ -390,7 +413,7 @@ textarea {
 }
 
 .redirect-url {
-    width: 600px;
+    width: 800px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

@@ -4,7 +4,7 @@
     <div class="decrypt-wrapper">
         <div class="decrypt">
             <h2 style="color: #1e5582; font-weight: 700;">Test Paygate Decryption</h2>
-            <p style="margin: 10px 0 10px 0; color: #1e5582;">Data are not stored on any server.</p>
+            <p style="margin: 10px 0 10px 0; color: #1e5582;">Data is not stored on any server.</p>
             <div class="data-wrapper">
                 <p style="width: 150px; text-align: right; margin-right: 10px;">Data</p>
                 <textarea class="custom-width" v-model="encryptedData"></textarea>

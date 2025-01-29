@@ -1,7 +1,7 @@
 <template>
     <div v-if="!this.auth.isAuthenticated" class="modal-overlay">
         <div class="modal-content">
-            <h2 style="margin-bottom: 10px;">Login</h2>
+            <h2 style="margin-bottom: 10px; user-select: none;">Login</h2>
             <p style="margin-bottom: 5px;">
                 <strong style="display: inline-block; width: 150px;">Username:</strong>
                 <input class="simple-input" v-model="username" type="text">

@@ -4,6 +4,7 @@
     <div class="main-wrapper">
         <div class="wrapper narrower">
             <h1 style="color: #1e5582; font-weight: 600;">Paygate Playground</h1>
+            <h3 style="color: tomato;">Data is not stored on any server.</h3>
             <div class="parameters">
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Environment:</strong>
@@ -31,16 +32,16 @@
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 12px;">Encryption password <strong
+                    <strong style="display: inline-block; width: 150px; font-size: 12px; user-select: none;">Encryption password <strong
                             title="Received from Computop" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="secret_test">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">HMAC password:</strong>
+                    <strong style="display: inline-block; width: 150px; user-select: none;">HMAC password:</strong>
                     <input type="text" placeholder="optional" class="simple-input" v-model="hmac_password">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Merchant ID:</strong>
+                    <strong style="display: inline-block; width: 150px; user-select: none;">Merchant ID:</strong>
                     <input type="text" class="simple-input" v-model="merchantid">
                 </p>
                 <p style="margin: 2px; display: flex;">
@@ -157,9 +158,11 @@
                     <strong style="display: inline-block; width: 150px;">CustomField4:</strong>
                     <input type="text" class="simple-input" v-model="customfield4">
                 </p>
-                <p style="margin: 2px;">
+                <div style="margin: 2px;">
+                    <div class="only-text-align">
                     <button @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
-                </p>
+                </div>
+                </div>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Plain text:</strong>
                     <textarea name="" id="">{{ plaintext }}</textarea>
@@ -467,11 +470,16 @@ textarea {
     border: none;
     background-color: #a5f729;
     border-radius: 5px;
-    padding: 10px 25px 10px 25px;
+    padding: 10px 45px 10px 45px;
     cursor: pointer;
     font-size: 16px;
     color: #1e5582;
     font-weight: 600;
+}
+
+.only-text-align {
+    text-align: center;
+    margin-top: 10px;
 }
 
 .narrow {

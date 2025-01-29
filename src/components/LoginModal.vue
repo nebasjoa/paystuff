@@ -10,10 +10,13 @@
                 <strong style="display: inline-block; width: 150px;">Password:</strong>
                 <input class="simple-input" v-model="password" type="password">
             </p>
-            <p>
+            <div>
+                <div style="display: flex; flex-direction: column; text-align: center;">
                 <button v-if="this.username.length > 0 && this.password.length > 0" class="simple-button" @click="login">Login</button>
                 <button v-else class="simple-button-disabled">Login</button>
-            </p>
+                <span style="color: red; font-weight: 500; display: inline-block; margin-top: 10px;">{{ errorMessage }}</span>
+            </div>
+            </div>
         </div>
     </div>
 </template>
@@ -26,13 +29,16 @@ export default {
             auth: useAuthStore(),
             username: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_USERNAME : '',
             password: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_PASSWORD : '',
+            errorMessage: '',
         }
     },
     methods: {
         login() {
             if (this.username === this.auth.getUsername && this.password === this.auth.getPassword) {
                 this.auth.isAuthenticated = true 
-            }
+            } else [
+                this.errorMessage = 'Check your credentials'
+            ]
         },
     },
     mounted() {
@@ -81,6 +87,7 @@ export default {
 }
 
 .simple-button {
+    margin: auto;
     margin-top: 10px;
     padding: 10px 30px 10px 30px;
     background-color: #1e5582;
@@ -88,9 +95,12 @@ export default {
     cursor: pointer;
     border: none;
     border-radius: 5px;
+    width: 150px;
+    text-align: center;
 }
 
 .simple-button-disabled {
+    margin: auto;
     margin-top: 10px;
     padding: 10px 30px 10px 30px;
     background-color: #ececec;
@@ -98,5 +108,7 @@ export default {
     cursor: not-allowed;
     border: none;
     border-radius: 5px;
+    width: 150px;
+    text-align: center;
 }
 </style>

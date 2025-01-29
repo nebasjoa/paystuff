@@ -242,7 +242,7 @@ export default {
             billToCustomer: '{"consumer":{"salutation":"Mr","firstName":"John","lastName":"Doe"},"phone":{"countryCode":"49","subscriberNumber":"12345678910"},"mobilePhone":{"countryCode":"49","subscriberNumber":"12345678910"}}',
             customfield1: '',
             customfield2: '',
-            customfield4: ''
+            customfield4: '',
         }
     },
     components: {
@@ -484,6 +484,7 @@ textarea {
     font-size: 16px;
     color: #1e5582;
     font-weight: 600;
+    outline: none;
 }
 
 .simple-button-disabled {

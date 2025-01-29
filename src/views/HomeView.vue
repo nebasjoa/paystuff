@@ -31,7 +31,8 @@
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 12px;">Encryption password:</strong>
+                    <strong style="display: inline-block; width: 150px; font-size: 12px;">Encryption password <strong
+                            title="Received from Computop" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="secret_test">
                 </p>
                 <p style="margin: 2px;">
@@ -67,6 +68,11 @@
                     <strong style="display: inline-block; width: 150px;">URLNotify:</strong>
                     <input type="text" class="simple-input" v-model="urlnotify">
                 </p>
+                <p v-if="paytype === 'paytweak'" style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px; font-size: 13px;">Service (Paytweak) <strong
+                        title="Values: link|email|sms" class="qm-tooltip">?</strong></strong>
+                    <input type="text" class="simple-input" v-model="paytweak_service">
+                </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Email:</strong>
                     <input type="text" class="simple-input" v-model="email">
@@ -75,10 +81,17 @@
                     <strong style="display: inline-block; width: 150px;">Preauth:</strong>
                     <input type="checkbox" v-model="preauth_flag" disabled> <!-- disabled for now -->
                 </p>
-                <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">OrderDesc:</strong>
-                    <input type="text" class="simple-input" v-model="orderdesc">
-                </p>
+                <div style="margin: 2px;">
+                    <div>
+                        <strong style="display: inline-block; width: 150px;">OrderDesc:</strong>
+                        <input type="text" class="simple-input" v-model="orderdesc">
+                    </div>
+                    <div class="order-desc-buttons">
+                        <button class="order-desc-button" @click="this.orderdesc = 'test:0000'"
+                            title="Use this for simulating successful payment">test:0000</button>
+                        <button class="order-desc-button" @click="this.orderdesc = 'test:0305'">test:0305</button>
+                    </div>
+                </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
                         <strong style="display: inline-block; width: 150px;">Card:</strong>
@@ -89,11 +102,15 @@
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
-                        <strong style="display: inline-block; width: 150px;">COF:</strong>
+                        <strong style="display: inline-block; width: 150px; font-size: 14px;">credentialOnFile:</strong>
                         <input type="checkbox" v-model="isCredentialOnFile">
                     </div>
                     <div><textarea class="custom-height" v-if="isCredentialOnFile" name="cof" id="cof"
                             v-model="credentialOnFile"></textarea>
+                    </div>
+                    <div v-if="isCredentialOnFile" class="cof-buttons">
+                        <button class="cof-button">MIT</button>
+                        <button class="cof-button">CIT</button>
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
@@ -101,7 +118,7 @@
                         <strong style="display: inline-block; width: 150px;">billToCustomer:</strong>
                         <input type="checkbox" v-model="isBillToCustomer">
                     </div>
-                    <div><textarea class="custom-height" v-if="isBillToCustomer" name="billToCustomer"
+                    <div><textarea style="height: 150px;" v-if="isBillToCustomer" name="billToCustomer"
                             id="billToCustomer" v-model="billToCustomer"></textarea>
                     </div>
                 </div>
@@ -116,7 +133,7 @@
                 </div>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Other parameters:</strong>
-                    <input type="text" class="simple-input" v-model="otherparams" disabled>
+                    <input type="text" class="simple-input" v-model="otherparams" placeholder="disabled for now" disabled>
                 </p>
                 <hr style="opacity: .2; margin: 10px;">
                 <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters:</h3>
@@ -139,10 +156,6 @@
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">CustomField4:</strong>
                     <input type="text" class="simple-input" v-model="customfield4">
-                </p>
-                <p v-if="paytype === 'paytweak'" style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Service (Paytweak):</strong>
-                    <input type="text" class="simple-input" v-model="paytweak_service">
                 </p>
                 <p style="margin: 2px;">
                     <button @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
@@ -339,50 +352,50 @@ export default {
 
             }
             return base_url
-    }
-},
-methods: {
-    generate_transid() {
-        let transid = '';
-        for (let i = 0; i < 10; i++) {
-            transid += Math.floor(Math.random() * 10); // Generates a random digit (0-9)
         }
-        this.transid = transid
-        this.isDataEncrypted = false
     },
-    encryptData(data) {
-        this.encrypted_data = CryptoJS.Blowfish.encrypt(data, CryptoJS.enc.Utf8.parse(this.secret_test), {
-            mode: CryptoJS.mode.ECB,
-            padding: CryptoJS.pad.Pkcs7
-        }).ciphertext.toString(CryptoJS.enc.Hex);
-        this.isDataEncrypted = true
-    },
+    methods: {
+        generate_transid() {
+            let transid = '';
+            for (let i = 0; i < 10; i++) {
+                transid += Math.floor(Math.random() * 10); // Generates a random digit (0-9)
+            }
+            this.transid = transid
+            this.isDataEncrypted = false
+        },
+        encryptData(data) {
+            this.encrypted_data = CryptoJS.Blowfish.encrypt(data, CryptoJS.enc.Utf8.parse(this.secret_test), {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            }).ciphertext.toString(CryptoJS.enc.Hex);
+            this.isDataEncrypted = true
+        },
         async callaspx() {
-        await axios.get(`https://test.computop-paygate.com/paybylinkexternal.aspx?MerchantId=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`)
-            .then(response => {
-                console.log('Response:', response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            await axios.get(`https://test.computop-paygate.com/paybylinkexternal.aspx?MerchantId=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`)
+                .then(response => {
+                    console.log('Response:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        },
+        onIframeLoad() {
+            const iframe = this.$refs.paymentIframe;
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                console.log(iframeDoc.body); // Access the <body> of the iframe
+            } catch (error) {
+                console.error("Cannot access iframe contents due to cross-origin restrictions.", error);
+            }
+        },
+        generateHMAC(hmac_data, secret) {
+            return CryptoJS.HmacSHA256(hmac_data, secret).toString(CryptoJS.enc.Hex);
+        },
     },
-    onIframeLoad() {
-        const iframe = this.$refs.paymentIframe;
-        try {
-            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            console.log(iframeDoc.body); // Access the <body> of the iframe
-        } catch (error) {
-            console.error("Cannot access iframe contents due to cross-origin restrictions.", error);
-        }
-    },
-    generateHMAC(hmac_data, secret) {
-        return CryptoJS.HmacSHA256(hmac_data, secret).toString(CryptoJS.enc.Hex);
-    },
-},
-mounted() {
-    this.generate_transid()
-    console.log(import.meta.env.MODE)
-}
+    mounted() {
+        this.generate_transid()
+        console.log(import.meta.env.MODE)
+    }
 }
 </script>
 
@@ -497,5 +510,39 @@ textarea {
 iframe {
     border: none;
     border-radius: 5px;
+}
+
+.cof-button {
+    border: none;
+    margin-right: 6px;
+    background-color: #a5f729;
+    padding: 1px 2px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.qm-tooltip {
+    display: inline-block;
+    background-color: #1e5582;
+    color: white;
+    border-radius: 50px;
+    min-width: 15px;
+    min-height: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.order-desc-buttons {
+    text-align: center;
+}
+
+.order-desc-button {
+    border: none;
+    margin-right: 6px;
+    background-color: #a5f729;
+    padding: 1px 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
 }
 </style>

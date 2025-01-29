@@ -12,21 +12,21 @@
             <div>
                 <h1>Inquiry</h1>
                 <div>
-                    <div>
+                    <div class="mini-wrapper">
                         <strong style="width: 200px; display: inline-block;">MerchantID</strong>
                         <input type="text" class="simple-input" v-model="merchantid">
                     </div>
-                    <div>
+                    <div class="mini-wrapper">
                         <strong style="width: 200px; display: inline-block;">Encryption password</strong>
                         <input type="text" class="simple-input" v-model="secret_test">
                     </div>
-                    <div>
+                    <div class="mini-wrapper">
                         <strong style="width: 200px; display: inline-block;">PayID</strong>
                         <input type="text" class="simple-input" v-model="payid">
                     </div>
-                    <div>
+                    <div class="mini-wrapper">
                         <strong style="width: 200px; display: inline-block;">TransID</strong>
-                        <input type="text" class="simple-input">
+                        <input type="text" class="simple-input" v-model="transid">
                     </div>
                     <div class="wrapper narrower">
                         <p style="margin: 2px;">
@@ -43,8 +43,13 @@
                         </p>
                     </div>
                 </div>
+                <!-- <div><p>{{ inquire_url }}</p></div> -->
                 <div style="text-align: center;">
                 <button @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
+            </div>
+            <div class="response">
+                <h3>Paygate inquire response</h3>
+                <iframe v-if="isInquired" :src="inquire_url" width="500" height="150" ref="paymentIframe" @load="onIframeLoad"></iframe>
             </div>
             </div>
         </div>
@@ -68,6 +73,7 @@ export default {
             len: 0,
             hmac_password: '',
             isDataEncrypted: false,
+            isInquired: false,
         }
     },
     components: {
@@ -77,10 +83,16 @@ export default {
     computed: {
         plaintext() {
             const params = {
-                "MerchantID": this.merchantid,
-                "TransID": this.transid,
-                "PayID": this.payid,
-            };
+                "MerchantID": this.merchantid
+            }
+
+            if (this.payid.length > 0) {
+                params.PayID = this.payid
+            }
+
+            if (this.transid.length > 0) {
+                params.TransID = this.transid
+            }
 
             if (this.hmac_password.length > 0) {
                 params.MAC = this.generateHMAC(this.hmac_data, this.hmac_password)
@@ -94,14 +106,28 @@ export default {
             this.len = this.plain_text.slice(0, -1).length;
             return this.plain_text.slice(0, -1);
         },
+        inquire_url() {
+            return `https://test.computop-paygate.com/inquire.aspx?MerchantID=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`
+        }
     },
     methods: {
         encryptData(data) {
+            this.isInquired = false
             this.encrypted_data = CryptoJS.Blowfish.encrypt(data, CryptoJS.enc.Utf8.parse(this.secret_test), {
                 mode: CryptoJS.mode.ECB,
                 padding: CryptoJS.pad.Pkcs7
             }).ciphertext.toString(CryptoJS.enc.Hex);
             this.isDataEncrypted = true
+            this.isInquired = true
+        },
+        onIframeLoad() {
+            const iframe = this.$refs.paymentIframe;
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                console.log(iframeDoc.body); // Access the <body> of the iframe
+            } catch (error) {
+                console.error("Cannot access iframe contents due to cross-origin restrictions.", error);
+            }
         },
     }
 }
@@ -147,16 +173,28 @@ h3 {
     font-size: 16px;
     color: #1e5582;
     font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 textarea {
     width: 500px;
-    height: 100px;
+    height: 50px;
     resize: none;
     border-radius: 10px;
     outline: none;
     padding: 5px;
     border: 1px solid;
     border-color: #d4d4d4;
+}
+
+.mini-wrapper {
+    margin-bottom: 5px;
+}
+
+iframe {
+    border: none;
+    overflow: hidden;
+    word-break: break-all;
 }
 </style>

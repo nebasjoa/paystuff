@@ -9,7 +9,7 @@
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Environment:</strong>
                     <select name="environment" id="environment" disabled>
-                        <option value="dev">DEV</option>
+                        <option value="dev">DEV disabled for now.</option>
                         <option value="test">TEST</option>
                         <option value="prod">PROD</option>
                     </select>
@@ -34,7 +34,7 @@
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; font-size: 12px; user-select: none;">Encryption password <strong
                             title="Received from Computop" class="qm-tooltip">?</strong></strong>
-                    <input type="text" class="simple-input" v-model="secret_test">
+                    <input type="text" class="simple-input" v-model="secret_test" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; user-select: none;">HMAC password:</strong>
@@ -42,7 +42,7 @@
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; user-select: none;">Merchant ID:</strong>
-                    <input type="text" class="simple-input" v-model="merchantid">
+                    <input type="text" class="simple-input" v-model="merchantid" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px; display: flex;">
                     <strong style="display: inline-block; width: 150px;">Transaction ID:</strong>
@@ -51,11 +51,11 @@
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Amount:</strong>
-                    <input type="text" class="simple-input" v-model="amount">
+                    <input type="text" class="simple-input" v-model="amount" placeholder="mandatory">
                 </p>
                 <p style="margin: 0;">
                     <strong style="display: inline-block; width: 150px;">Currency:</strong>
-                    <input type="text" class="simple-input" v-model="currency">
+                    <input type="text" class="simple-input" v-model="currency" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">URLSuccess:</strong>
@@ -160,7 +160,8 @@
                 </p>
                 <div style="margin: 2px;">
                     <div class="only-text-align">
-                    <button @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
+                    <button v-if="this.merchantid.length !== 0 && this.secret_test.length !== 0" @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
+                    <button v-else class="simple-button-disabled">Encrypt</button>
                 </div>
                 </div>
             </div>
@@ -214,7 +215,7 @@ export default {
             transid: '',
             amount: '1000',
             currency: 'EUR',
-            orderdesc: 'test:nebojsa',
+            orderdesc: 'test:payment',
             urlsuccess: 'http://127.0.0.1:3005/success',
             urlfailure: 'http://127.0.0.1:3005/failure',
             urlnotify: 'http://127.0.0.1:3005/urlnotify',
@@ -482,6 +483,17 @@ textarea {
     cursor: pointer;
     font-size: 16px;
     color: #1e5582;
+    font-weight: 600;
+}
+
+.simple-button-disabled {
+    border: none;
+    background-color: #ececec;
+    border-radius: 5px;
+    padding: 10px 45px 10px 45px;
+    cursor: not-allowed;
+    font-size: 16px;
+    color: white;
     font-weight: 600;
 }
 

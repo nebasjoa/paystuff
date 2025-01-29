@@ -49,6 +49,10 @@
                     <input type="text" class="simple-input narrow" v-model="transid">
                     <button @click="generate_transid" class="generate-button">Generate TransID</button>
                 </p>
+                <p style="margin: 2px; display: flex;">
+                    <strong style="display: inline-block; width: 150px;">Channel:</strong>
+                    <input type="text" class="simple-input" v-model="channel">
+                </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Amount:</strong>
                     <input type="text" class="simple-input" v-model="amount" placeholder="mandatory">
@@ -143,8 +147,16 @@
                     <input type="text" class="simple-input" v-model="template">
                 </p>
                 <p style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px;">CCTemplate:</strong>
+                    <input type="text" class="simple-input" v-model="cctemplate">
+                </p>
+                <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Pay Types:</strong>
                     <input type="text" class="simple-input" v-model="hpppaytypes">
+                </p>
+                <p style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px;">Language:</strong>
+                    <input type="text" class="simple-input" v-model="language">
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">CustomField1:</strong>
@@ -237,12 +249,15 @@ export default {
             credentialOnFile: '{"type":{"recurring":{"recurringFrequency":30,"recurringStartDate":"2025-09-14","recurringExpiryDate":"2025-09-14"}},"initialPayment":true}',
             hmac_password: '',
             template: '',
+            cctemplate: '',
             hpppaytypes: '',
             isBillToCustomer: false,
             billToCustomer: '{"consumer":{"salutation":"Mr","firstName":"John","lastName":"Doe"},"phone":{"countryCode":"49","subscriberNumber":"12345678910"},"mobilePhone":{"countryCode":"49","subscriberNumber":"12345678910"}}',
             customfield1: '',
             customfield2: '',
             customfield4: '',
+            channel: '',
+            language: '',
         }
     },
     components: {
@@ -281,6 +296,10 @@ export default {
 
             if (this.preauth_flag) {
                 params.TxType = 'preauth';
+            }
+
+            if (this.channel.length > 0) {
+                params.Channel = this.channel;
             }
 
             if (this.isCard) {
@@ -344,8 +363,15 @@ export default {
             if (this.template.length > 0) {
                 base_url = base_url + `&Template=${this.template}`
             }
+            if (this.cctemplate.length > 0) {
+                base_url = base_url + `&CCTemplate=${this.cctemplate}`
+            }
             if (this.hpppaytypes.length > 0) {
                 base_url = base_url + `&PayTypes=${this.hpppaytypes}`
+
+            }
+            if (this.language.length > 0) {
+                base_url = base_url + `&Language=${this.language}`
 
             }
             if (this.customfield1.length > 0) {

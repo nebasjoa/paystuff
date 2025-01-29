@@ -398,6 +398,13 @@ export default {
     mounted() {
         this.generate_transid()
         console.log(import.meta.env.MODE)
+    },
+    watch: {
+        paytype() {
+            if (this.paytype === 'simplepay') {
+                this.currency = 'HUF'
+            }
+        }
     }
 }
 </script>

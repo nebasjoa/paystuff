@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DecryptView from '../views/DecryptView.vue'
+import OtherView from '../views/OtherView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,7 +11,8 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    {path: '/decrypt', name: 'decrypt', component: DecryptView,}
+    {path: '/decrypt', name: 'decrypt', component: DecryptView},
+    {path: '/other', name: 'other', component: OtherView}
   ],
 })
 

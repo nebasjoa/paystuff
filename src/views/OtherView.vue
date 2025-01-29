@@ -1,0 +1,162 @@
+<template>
+    <Header />
+    <Navbar />
+    <div class="other-main-wrapper">
+        <div class="other-wrapper">
+            <div>
+                <h1>Capture</h1>
+            </div>
+            <div>
+                <h1>Increment</h1>
+            </div>
+            <div>
+                <h1>Inquiry</h1>
+                <div>
+                    <div>
+                        <strong style="width: 200px; display: inline-block;">MerchantID</strong>
+                        <input type="text" class="simple-input" v-model="merchantid">
+                    </div>
+                    <div>
+                        <strong style="width: 200px; display: inline-block;">Encryption password</strong>
+                        <input type="text" class="simple-input" v-model="secret_test">
+                    </div>
+                    <div>
+                        <strong style="width: 200px; display: inline-block;">PayID</strong>
+                        <input type="text" class="simple-input" v-model="payid">
+                    </div>
+                    <div>
+                        <strong style="width: 200px; display: inline-block;">TransID</strong>
+                        <input type="text" class="simple-input">
+                    </div>
+                    <div class="wrapper narrower">
+                        <p style="margin: 2px;">
+                            <strong style="display: inline-block; width: 200px;">Plain text:</strong>
+                            <textarea name="" id="">{{ plaintext }}</textarea>
+                        </p>
+                        <p style="margin: 2px;">
+                            <strong style="display: inline-block; width: 200px;">Len:</strong>
+                            <span>{{ len }}</span>
+                        </p>
+                        <p style="margin: 2px;">
+                            <strong style="display: inline-block; width: 200px;">Encrypted data:</strong>
+                            <textarea v-if="encrypted_data" name="" id="">{{ encrypted_data }}</textarea>
+                        </p>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                <button @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import Navbar from '@/components/Navbar.vue'
+import LoginModal from "@/components/LoginModal.vue";
+import Header from "@/components/Header.vue";
+import CryptoJS from "crypto-js";
+export default {
+    data() {
+        return {
+            merchantid: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_TEST_MERCHANTID : '',
+            payid: '',
+            transid: '',
+            secret_test: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_TEST_SECRET : '',
+            encrypted_data: '',
+            plain_text: '',
+            len: 0,
+            hmac_password: '',
+            isDataEncrypted: false,
+        }
+    },
+    components: {
+        Header,
+        Navbar
+    },
+    computed: {
+        plaintext() {
+            const params = {
+                "MerchantID": this.merchantid,
+                "TransID": this.transid,
+                "PayID": this.payid,
+            };
+
+            if (this.hmac_password.length > 0) {
+                params.MAC = this.generateHMAC(this.hmac_data, this.hmac_password)
+            }
+
+            // Convert the object to a query string format
+            this.plain_text = Object.entries(params)
+                .map(([key, value]) => `${key}=${value}`)
+                .join("&") + "&";  // Adds the trailing '&'
+
+            this.len = this.plain_text.slice(0, -1).length;
+            return this.plain_text.slice(0, -1);
+        },
+    },
+    methods: {
+        encryptData(data) {
+            this.encrypted_data = CryptoJS.Blowfish.encrypt(data, CryptoJS.enc.Utf8.parse(this.secret_test), {
+                mode: CryptoJS.mode.ECB,
+                padding: CryptoJS.pad.Pkcs7
+            }).ciphertext.toString(CryptoJS.enc.Hex);
+            this.isDataEncrypted = true
+        },
+    }
+}
+</script>
+
+<style scoped>
+h1,
+h2,
+h3 {
+    color: #1e5582;
+}
+
+.other-main-wrapper {
+    width: 100%;
+    margin: auto;
+    display: flex;
+}
+
+.other-wrapper {
+    padding: 20px;
+    width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.simple-input {
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: #d4d4d4;
+    width: 300px;
+    border-color: #d4d4d4;
+    outline: none;
+}
+
+.simple-button {
+    border: none;
+    background-color: #a5f729;
+    border-radius: 5px;
+    padding: 10px 45px 10px 45px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #1e5582;
+    font-weight: 600;
+}
+
+textarea {
+    width: 500px;
+    height: 100px;
+    resize: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px;
+    border: 1px solid;
+    border-color: #d4d4d4;
+}
+</style>

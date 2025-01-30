@@ -8,7 +8,7 @@
             <div class="parameters">
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Environment:</strong>
-                    <select name="environment" id="environment" disabled>
+                    <select name="environment" id="environment" disabled style="width: 250px;">
                         <option value="dev">DEV disabled for now.</option>
                         <option value="test">TEST</option>
                         <option value="prod">PROD</option>
@@ -16,13 +16,16 @@
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Pay type:</strong>
-                    <select name="paytype" id="paytype" v-model="paytype">
-                        <option value="HPP">HPP</option>
-                        <option value="payssl">payssl</option>
-                        <option value="paytweak">paytweak</option>
-                        <option value="mandate">EasyCollect</option>
-                        <option value="direct">S2S</option>
-                        <option value="simplepay">SimplePay</option>
+                    <select name="paytype" id="paytype" v-model="paytype" style="width: 250px;">
+                        <option value="mandateform">EasyCollect (mandateform.aspx)</option>
+                        <option value="HPP">HPP (paymentpage.aspx)</option>
+                        <option value="instanea">Instanea (instanea.aspx)</option>
+                        <option value="klarnapayments">KlarnaPM (klarnapayments.aspx)</option>
+                        <option value="payssl">payssl (payssl.aspx)</option>
+                        <option value="paybylink">paybylink (paybylink.aspx)</option>
+                        <option value="paytweak">paytweak (paybylinkexternal.aspx)</option>
+                        <option value="direct">S2S (direct.aspx)</option>
+                        <option value="simplepay">SimplePay (simplepay.aspx)</option>
                     </select>
                 </p>
                 <hr style="opacity: .2; margin: 10px;">
@@ -48,6 +51,10 @@
                     <strong style="display: inline-block; width: 150px;">Transaction ID:</strong>
                     <input type="text" class="simple-input narrow" v-model="transid">
                     <button @click="generate_transid" class="generate-button">Generate TransID</button>
+                </p>
+                <p style="margin: 2px; display: flex;">
+                    <strong style="display: inline-block; width: 150px;">RefNr:</strong>
+                    <input type="text" class="simple-input" v-model="refnr">
                 </p>
                 <p style="margin: 2px; display: flex;">
                     <strong style="display: inline-block; width: 150px;">Channel:</strong>
@@ -77,6 +84,10 @@
                     <strong style="display: inline-block; width: 150px; font-size: 13px;">Service (Paytweak) <strong
                         title="Values: link|email|sms" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="paytweak_service">
+                </p>
+                <p v-if="paytype === 'paybylink'" style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px; font-size: 13px;">PBL expiration date:</strong>
+                    <input type="text" class="simple-input" v-model="paybylinkexpiration" placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Email:</strong>
@@ -225,6 +236,7 @@ export default {
         return {
             merchantid: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_TEST_MERCHANTID : '',
             transid: '',
+            refnr: '',
             amount: '1000',
             currency: 'EUR',
             orderdesc: 'test:payment',
@@ -258,6 +270,8 @@ export default {
             customfield4: '',
             channel: '',
             language: '',
+            paybylinkexpiration: '2099-12-31 23:59:59',
+            articlelist: '{"order_lines":[{"name":"Advanced Care","quantity":1,"quantity_unit":"STK","reference":"1452906","tax_rate":1900,"total_amount":500,"type":"physical","unit_price":500}]}',
         }
     },
     components: {
@@ -294,12 +308,28 @@ export default {
                 //
             }
 
+            if (this.paytype === 'paybylink') {
+                params.ExpirationDate = this.paybylinkexpiration;
+            }
+
+            if (this.paytype === 'klarnapayments') {
+                params.ArticleList = btoa(this.articlelist);
+                params.TaxAmount = '100'
+                params.URLConfirm = 'https://localhost:3005/confirm'
+                params.bdCountryCode = 'DE'
+                params.Account = '1'
+            }
+
             if (this.preauth_flag) {
                 params.TxType = 'preauth';
             }
 
             if (this.channel.length > 0) {
                 params.Channel = this.channel;
+            }
+
+            if (this.refnr.length > 0) {
+                params.RefNr = this.refnr;
             }
 
             if (this.isCard) {
@@ -332,24 +362,51 @@ export default {
         },
         frontend() {
             if (this.paytype === 'HPP') {
+                this.isMsgVer2 = true
                 this.isDataEncrypted = false
+                this.encrypted_data = ''
                 return 'paymentpage'
             } else if (this.paytype === 'payssl') {
+                this.isMsgVer2 = true
                 this.isDataEncrypted = false
+                this.encrypted_data = ''
                 return 'payssl'
             } else if (this.paytype === 'paytweak') {
+                this.isMsgVer2 = true
                 this.isDataEncrypted = false
+                this.encrypted_data = ''
                 return 'paybylinkexternal'
-            } else if (this.paytype === 'mandate') {
+            } else if (this.paytype === 'mandateform') {
+                this.isMsgVer2 = false
                 this.isDataEncrypted = false
-                return 'mandate'
+                this.encrypted_data = ''
+                return 'mandateform'
             } else if (this.paytype === 'direct') {
+                this.isMsgVer2 = true
                 this.isDataEncrypted = false
+                this.encrypted_data = ''
                 return 'direct'
-            } else if (this.paytype === 'simplepay') {
+            } else if (this.paytype === 'instanea') {
+                this.isMsgVer2 = false
                 this.isDataEncrypted = false
+                this.encrypted_data = ''
+                return 'instanea'
+            }else if (this.paytype === 'paybylink') {
+                this.isMsgVer2 = true
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
+                return 'paybylink'
+            } else if (this.paytype === 'simplepay') {
+                this.isMsgVer2 = false
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
                 return 'simplepay'
-            }
+            } else if (this.paytype === 'klarnapayments') {
+                this.isMsgVer2 = false
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
+                return 'klarnapayments'
+            } 
             else {
                 this.isDataEncrypted = false
                 return '...'

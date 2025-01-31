@@ -18,6 +18,7 @@
                     <strong style="display: inline-block; width: 150px;">Pay type:</strong>
                     <select name="paytype" id="paytype" v-model="paytype" style="width: 250px;">
                         <option value="mandateform">EasyCollect (mandateform.aspx)</option>
+                        <option value="floapay">Floapay (floapay.aspx)</option>
                         <option value="HPP">HPP (paymentpage.aspx)</option>
                         <option value="instanea">Instanea (instanea.aspx)</option>
                         <option value="klarnapayments">KlarnaPM (klarnapayments.aspx)</option>
@@ -60,6 +61,10 @@
                     <strong style="display: inline-block; width: 150px;">Channel:</strong>
                     <input type="text" class="simple-input" v-model="channel">
                 </p>
+                <p style="margin: 2px; display: flex;">
+                    <strong style="display: inline-block; width: 150px;">Customer ID:</strong>
+                    <input type="text" class="simple-input" v-model="customerid">
+                </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Amount:</strong>
                     <input type="text" class="simple-input" v-model="amount" placeholder="mandatory">
@@ -77,8 +82,12 @@
                     <input type="text" class="simple-input" v-model="urlfailure">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">URLNotify:</strong>
+                    <strong style="display: inline-block; width: 150px;">URLBack:</strong>
                     <input type="text" class="simple-input" v-model="urlnotify">
+                </p>
+                <p style="margin: 2px;">
+                    <strong style="display: inline-block; width: 150px;">URLNotify:</strong>
+                    <input type="text" class="simple-input" v-model="urlback">
                 </p>
                 <p v-if="paytype === 'paytweak'" style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; font-size: 13px;">Service (Paytweak) <strong
@@ -243,6 +252,7 @@ export default {
             urlsuccess: 'http://127.0.0.1:3005/success',
             urlfailure: 'http://127.0.0.1:3005/failure',
             urlnotify: 'http://127.0.0.1:3005/urlnotify',
+            urlback: 'http://127.0.0.1:3005/back',
             email: import.meta.env.VITE_ENVIRONMENT === 'development' ? 'nebojsa.pesic@computop.com' : '',
             secret_test: import.meta.env.VITE_ENVIRONMENT === 'development' ? import.meta.env.VITE_TEST_SECRET : '',
             encrypted_data: '',
@@ -269,6 +279,7 @@ export default {
             customfield2: '',
             customfield4: '',
             channel: '',
+            customerid: '',
             language: '',
             paybylinkexpiration: '2099-12-31 23:59:59',
             articlelist: '{"order_lines":[{"name":"Advanced Care","quantity":1,"quantity_unit":"STK","reference":"1452906","tax_rate":1900,"total_amount":500,"type":"physical","unit_price":500}]}',
@@ -292,6 +303,7 @@ export default {
                 "URLSuccess": this.urlsuccess,
                 "URLFailure": this.urlfailure,
                 "URLNotify": this.urlnotify,
+                "URLBack": this.urlback,
                 "email": this.email,
                 "OrderDesc": this.orderdesc,
             };
@@ -310,6 +322,16 @@ export default {
 
             if (this.paytype === 'paybylink') {
                 params.ExpirationDate = this.paybylinkexpiration;
+            }
+
+            if (this.paytype === 'floapay') {
+                params.Homepage = 'https://localhost:3005/homepage'
+                params.CustomerID = this.customerid
+                params.LastName = 'User'
+                params.FirstName = 'Test'
+                params.AddrCountryCode = '276'
+                params.Date = '2025/01/01'
+                params.NumberArticles = '2'
             }
 
             if (this.paytype === 'klarnapayments') {
@@ -406,6 +428,12 @@ export default {
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
                 return 'klarnapayments'
+            } 
+            else if (this.paytype === 'floapay') {
+                this.isMsgVer2 = false
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
+                return 'floapay'
             } 
             else {
                 this.isDataEncrypted = false

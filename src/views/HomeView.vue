@@ -36,8 +36,8 @@
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 12px; user-select: none;">Encryption password <strong
-                            title="Received from Computop" class="qm-tooltip">?</strong></strong>
+                    <strong style="display: inline-block; width: 150px; font-size: 12px; user-select: none;">Encryption
+                        password <strong title="Received from Computop" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="secret_test" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px;">
@@ -91,12 +91,13 @@
                 </p>
                 <p v-if="paytype === 'paytweak'" style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; font-size: 13px;">Service (Paytweak) <strong
-                        title="Values: link|email|sms" class="qm-tooltip">?</strong></strong>
+                            title="Values: link|email|sms" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="paytweak_service">
                 </p>
                 <p v-if="paytype === 'paybylink'" style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px; font-size: 13px;">PBL expiration date:</strong>
-                    <input type="text" class="simple-input" v-model="paybylinkexpiration" placeholder="YYYY-MM-DD HH:MM:SS">
+                    <input type="text" class="simple-input" v-model="paybylinkexpiration"
+                        placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Email:</strong>
@@ -158,7 +159,7 @@
                 </div>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Other parameters:</strong>
-                    <input type="text" class="simple-input" v-model="otherparams" placeholder="disabled for now" disabled>
+                    <input type="text" class="simple-input" v-model="otherparams" placeholder="">
                 </p>
                 <hr style="opacity: .2; margin: 10px;">
                 <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters:</h3>
@@ -192,25 +193,26 @@
                 </p>
                 <div style="margin: 2px;">
                     <div class="only-text-align">
-                    <button v-if="this.merchantid.length !== 0 && this.secret_test.length !== 0" @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
-                    <button v-else class="simple-button-disabled">Encrypt</button>
-                </div>
+                        <button v-if="this.merchantid.length !== 0 && this.secret_test.length !== 0"
+                            @click="encryptData(plaintext)" class="simple-button">Encrypt</button>
+                        <button v-else class="simple-button-disabled">Encrypt</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="wrapper narrower">
             <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Plain text:</strong>
-                    <textarea name="" id="">{{ plaintext }}</textarea>
-                </p>
-                <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Len:</strong>
-                    <span>{{ len }}</span>
-                </p>
-                <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Encrypted data:</strong>
-                    <textarea v-if="encrypted_data" name="" id="">{{ encrypted_data }}</textarea>
-                </p>
+                <strong style="display: inline-block; width: 150px;">Plain text:</strong>
+                <textarea name="" id="">{{ plaintext }}</textarea>
+            </p>
+            <p style="margin: 2px;">
+                <strong style="display: inline-block; width: 150px;">Len:</strong>
+                <span>{{ len }}</span>
+            </p>
+            <p style="margin: 2px;">
+                <strong style="display: inline-block; width: 150px;">Encrypted data:</strong>
+                <textarea v-if="encrypted_data" name="" id="">{{ encrypted_data }}</textarea>
+            </p>
         </div>
         <div style="margin: 0;">
             <div class="wrapper wider">
@@ -281,6 +283,7 @@ export default {
             channel: '',
             customerid: '',
             language: '',
+            otherparams: '',
             paybylinkexpiration: '2099-12-31 23:59:59',
             articlelist: '{"order_lines":[{"name":"Advanced Care","quantity":1,"quantity_unit":"STK","reference":"1452906","tax_rate":1900,"total_amount":500,"type":"physical","unit_price":500}]}',
         }
@@ -325,21 +328,25 @@ export default {
             }
 
             if (this.paytype === 'floapay') {
-                params.Homepage = 'https://localhost:3005/homepage'
-                params.CustomerID = this.customerid
-                params.LastName = 'User'
-                params.FirstName = 'Test'
-                params.AddrCountryCode = '276'
-                params.Date = '2025/01/01'
-                params.NumberArticles = '2'
+                Object.assign(params, {
+                    Homepage: 'https://localhost:3005/homepage',
+                    CustomerID: this.customerid,
+                    LastName: 'User',
+                    FirstName: 'Test',
+                    AddrCountryCode: '276',
+                    Date: '2025/01/01',
+                    NumberArticles: '2',
+                });
             }
 
             if (this.paytype === 'klarnapayments') {
-                params.ArticleList = btoa(this.articlelist);
-                params.TaxAmount = '100'
-                params.URLConfirm = 'https://localhost:3005/confirm'
-                params.bdCountryCode = 'DE'
-                params.Account = '1'
+                Object.assign(params, {
+                    ArticleList: btoa(this.articlelist),
+                    TaxAmount: '100',
+                    URLConfirm: 'https://localhost:3005/confirm',
+                    bdCountryCode: 'DE',
+                    Account: '1',
+                });
             }
 
             if (this.preauth_flag) {
@@ -374,6 +381,11 @@ export default {
                 params.MAC = this.generateHMAC(this.hmac_data, this.hmac_password)
             }
 
+            this.otherparamsarray.forEach(element => {
+                let [key, value] = element.split('=');
+                if (key) params[key] = value;
+            });
+
             // Convert the object to a query string format
             this.plain_text = Object.entries(params)
                 .map(([key, value]) => `${key}=${value}`)
@@ -381,6 +393,9 @@ export default {
 
             this.len = this.plain_text.slice(0, -1).length;
             return this.plain_text.slice(0, -1);
+        },
+        otherparamsarray() {
+            return this.otherparams ? this.otherparams.split('&') : [];
         },
         frontend() {
             if (this.paytype === 'HPP') {
@@ -413,7 +428,7 @@ export default {
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
                 return 'instanea'
-            }else if (this.paytype === 'paybylink') {
+            } else if (this.paytype === 'paybylink') {
                 this.isMsgVer2 = true
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
@@ -428,13 +443,13 @@ export default {
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
                 return 'klarnapayments'
-            } 
+            }
             else if (this.paytype === 'floapay') {
                 this.isMsgVer2 = false
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
                 return 'floapay'
-            } 
+            }
             else {
                 this.isDataEncrypted = false
                 return '...'
@@ -517,7 +532,7 @@ export default {
             if (this.paytype === 'simplepay') {
                 this.currency = 'HUF'
             }
-        }
+        },
     }
 }
 </script>

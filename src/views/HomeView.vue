@@ -227,12 +227,13 @@
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <strong style="display: inline-block; width: 150px;">{{ this.paytype }}:</strong>
                     <div style="display: flex; align-items: center;">
-                        <span class="redirect-url">{{ testurl_ohne_data }}</span>
+                        <p class="redirect-url">{{ testurl_ohne_data }}</p>
                         <a class="payment-url-button" v-if="isDataEncrypted" :href=testurl target="_blank">Call {{
                             this.paytype }}</a>
                     </div>
                     <div style="align-items: center; display: flex;" v-if="isDataEncrypted">
                         <canvas ref="qrcodeCanvas"></canvas>
+                        <p v-if="!this.isQRCodeGenerated" style="margin-right: 10px; font-size: 14px; color: #1e5582">Or generate QR code with payment URL:</p>
                         <button class="simpler-button" @click="generateQR()" v-if="!this.isQRCodeGenerated">Generate QR code</button>
                     </div>
                 </div>
@@ -303,6 +304,7 @@ export default {
             isParametersModal: false,
             receivedParameter: null,
             isQRCodeGenerated: false,
+            baseUrl: ''
         }
     },
     components: {
@@ -779,5 +781,11 @@ iframe {
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
+}
+canvas {
+    height: 0;
+    width: 0;
+    background-color: red;
+    text-align: left;
 }
 </style>

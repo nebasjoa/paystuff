@@ -8,15 +8,15 @@
             <div class="parameters">
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Environment:</strong>
-                    <select name="environment" id="environment" style="width: 250px;" v-model="environment">
+                    <select name="environment" id="environment" style="width: 310px;" v-model="environment">
                         <option value="dev">DEV</option>
                         <option value="test">TEST</option>
                         <option value="prod">PRODUCTION</option>
                     </select>
                 </p>
-                <p style="margin: 2px;">
+                <p v-if="!isOtherPaymentMethod" style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Pay type:</strong>
-                    <select name="paytype" id="paytype" v-model="paytype" style="width: 250px;"  @click="isOtherPaymentMethod = false">
+                    <select name="paytype" id="paytype" v-model="paytype" style="width: 310px;"  @click="isOtherPaymentMethod = false">
                         <option value="mandateform">EasyCollect (mandateform.aspx)</option>
                         <option value="floapay">Floapay (floapay.aspx)</option>
                         <option value="paymentpage">HPP (paymentpage.aspx)</option>
@@ -29,11 +29,11 @@
                         <option value="simplepay">SimplePay (simplepay.aspx)</option>
                     </select>
                 </p>
-                <div style="margin: 2px; align-items: center; display: flex;">
-                    <strong style="display: inline-block; width: 150px; align-items: center;">Other payment method <strong title="Use this if payment method not listed in above dropdown" class="qm-tooltip">?</strong></strong>
+                <div style="margin: 2px; align-items: center; display: flex; margin-top: 5px;">
+                    <strong style="display: inline-block; width: 150px; align-items: center; font-size: 12px">Other payment method <strong title="Use this if payment method not listed in above dropdown" class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isOtherPaymentMethod" style="margin-right: 10px;">
                     <div v-if="isOtherPaymentMethod">
-                        <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod">
+                        <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod" placeholder="example (example.aspx)">
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">

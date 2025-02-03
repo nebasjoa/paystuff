@@ -16,7 +16,7 @@
                 </p>
                 <p style="margin: 2px;">
                     <strong style="display: inline-block; width: 150px;">Pay type:</strong>
-                    <select name="paytype" id="paytype" v-model="paytype" style="width: 250px;">
+                    <select name="paytype" id="paytype" v-model="paytype" style="width: 250px;"  @click="isOtherPaymentMethod = false">
                         <option value="mandateform">EasyCollect (mandateform.aspx)</option>
                         <option value="floapay">Floapay (floapay.aspx)</option>
                         <option value="paymentpage">HPP (paymentpage.aspx)</option>
@@ -29,6 +29,13 @@
                         <option value="simplepay">SimplePay (simplepay.aspx)</option>
                     </select>
                 </p>
+                <div style="margin: 2px; align-items: center; display: flex;">
+                    <strong style="display: inline-block; width: 150px; align-items: center;">Other payment method <strong title="Use this if payment method not listed in above dropdown" class="qm-tooltip">?</strong></strong>
+                    <input type="checkbox" v-model="isOtherPaymentMethod" style="margin-right: 10px;">
+                    <div v-if="isOtherPaymentMethod">
+                        <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod">
+                    </div>
+                </div>
                 <hr style="opacity: .2; margin: 10px;">
                 <h3 style="color: #1e5582; font-weight: 600;">Encrypted parameters:</h3>
                 <p style="margin: 2px; align-items: center; display: flex;">
@@ -161,10 +168,13 @@
                     <strong style="display: inline-block; width: 150px; font-size: 13px;">Other parameters <strong
                             title="Use this field to manually add payment specific parameters. Example: key1=value1&key2=value2. It will automatically be parsed and included in the request. Or click on Show all parameters button to add parameters on a click."
                             class="qm-tooltip">?</strong></strong>
-                    <input type="text" class="simple-input" v-model="otherparams" placeholder="">
+                            <input type="checkbox" v-model="isOtherParameters">
+                    <div v-if="isOtherParameters">
+                    <textarea class="only-height" type="text" v-model="otherparams" placeholder=""></textarea>
                     <div style="display: flex; margin-top: 4px; justify-content: center;">
                         <button class="show-all-button" @click="isParametersModal = true">Show all parameters</button>
                         <button class="show-all-button" @click="this.otherparams = ''">Clear field</button>
+                    </div>
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
@@ -305,6 +315,9 @@ export default {
             isParametersModal: false,
             receivedParameter: null,
             isQRCodeGenerated: false,
+            isOtherParameters: false,
+            isOtherPaymentMethod: false,
+            otherpaymentmethod: '',
         }
     },
     components: {
@@ -324,6 +337,14 @@ export default {
                 return 'test.computop-paygate.com'
             } else {
                 return 'computop-paygate.com'
+            }
+        },
+        replaceFrontEnd() {
+            if (this.isOtherPaymentMethod && this.otherpaymentmethod.length > 0) {
+                this.paytype = ''
+                return this.otherpaymentmethod
+            } else {
+                return this.frontend
             }
         },
         plaintext() {
@@ -485,10 +506,10 @@ export default {
             }
         },
         testurl_ohne_data() {
-            return `https://${this.baseurl}/${this.frontend}.aspx?MerchantID=${this.merchantid}&Len=${this.len}&Data=[EncryptedData]`
+            return `https://${this.baseurl}/${this.replaceFrontEnd}.aspx?MerchantID=${this.merchantid}&Len=${this.len}&Data=[EncryptedData]`
         },
         testurl() {
-            let base_url = `https://${this.baseurl}/${this.frontend}.aspx?MerchantID=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`
+            let base_url = `https://${this.baseurl}/${this.replaceFrontEnd}.aspx?MerchantID=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`
             if (this.template.length > 0) {
                 base_url = base_url + `&Template=${this.template}`
             }
@@ -530,15 +551,6 @@ export default {
             }).ciphertext.toString(CryptoJS.enc.Hex);
             this.isDataEncrypted = true
             this.isQRCodeGenerated = false
-        },
-        async callaspx() {
-            await axios.get(`https://${this.baseurl}/paybylinkexternal.aspx?MerchantId=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`)
-                .then(response => {
-                    console.log('Response:', response.data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         },
         generateQR() {
             QRCode.toCanvas(this.$refs.qrcodeCanvas, `https://${this.baseurl}/${this.paytype}.aspx?MerchantId=${this.merchantid}&Len=${this.len}&Data=${this.encrypted_data}`, {
@@ -800,5 +812,10 @@ canvas {
     width: 0;
     background-color: red;
     text-align: left;
+}
+
+.only-height {
+    height: 100px;
+    margin-top: 4px;
 }
 </style>

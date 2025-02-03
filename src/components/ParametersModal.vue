@@ -33,14 +33,13 @@ export default {
                 "Custom", "CustomerHistory", "CustomerID", "CustomerRefNr", "CustomerScore", "CustomParameter", "Cycle", "DateOfBirth",
                 "DtOfSgntr", "DueDate", "eci", "ECI3D", "EDDMethod", "Email",
                 "Enddate", "EntryMode", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
-                "Expiry", "FirstName", "Gender", "Homepage", "IBAN", 
-                 "InstallmentAmount", "InstallmentDate", "InstallmentLastAmount", "InstallmentNumber",
-                "InstalmentData", "InterestRate", "Interval", "InvoiceDate", "InvoiceFlag", "InvoiceNr", "InvoiceText", "IPAddr",
+                "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType",
+                "InvoiceNr", "InvoiceText", "IPAddr",
                 "IpZone", "IssuerID", "ItemTotal", "KlarnaAction", "Language", "LastName",
                 "LocalAmount", "LocalCurrency", "MAC", 
                 "MandateID", "MobileNet", "MobileNr", "Month", "Name", "PayID",
                 "PayPalMethod", "PayTerm", "PayType",
-                "Phone", "PhoneAreaCode"
+                "Phone", "PhoneAreaCode", "schemeReferenceID"
             ]
         }
     },

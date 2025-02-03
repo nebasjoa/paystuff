@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
-                <h3 style="color: #1e5582; font-weight: 600;">Encrypted parameters:</h3>
+                <h3 style="color: #1e5582; font-weight: 600;">Encrypted parameters</h3>
                 <p style="margin: 2px; align-items: center; display: flex;">
                     <strong class="strong-label">MsgVer=2.0 <strong title="This parameter is required to indicate that your implementation supports 3-D Secure processing" class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isMsgVer2">
@@ -55,32 +55,32 @@
                     <strong class="strong-label">Merchant ID:</strong>
                     <input type="text" class="simple-input" v-model="merchantid" placeholder="mandatory">
                 </p>
-                <p style="margin: 2px; display: flex;">
+                <p style="margin: 2px; display: flex; align-items: center;">
                     <strong class="strong-label">Transaction ID:</strong>
                     <input type="text" class="simple-input narrow" v-model="transid">
-                    <button @click="generate_transid" class="generate-button">Generate TransID</button>
+                    <button @click="generate_transid" class="generate-button custom-padding">Generate TransID</button>
                 </p>
-                <p style="margin: 2px; display: flex;">
+                <p style="margin: 2px; display: flex; align-items: center;">
                     <strong class="strong-label">RefNr:</strong>
                     <input type="text" class="simple-input" v-model="refnr">
                 </p>
-                <p style="margin: 2px; display: flex;">
+                <p style="margin: 2px; display: flex; align-items: center;">
                     <strong class="strong-label">Channel:</strong>
                     <input type="text" class="simple-input" v-model="channel">
                 </p>
-                <p style="margin: 2px; display: flex;">
+                <p style="margin: 2px; display: flex; align-items: center;">
                     <strong class="strong-label">Customer ID:</strong>
                     <input type="text" class="simple-input" v-model="customerid">
                 </p>
-                <p style="margin: 2px; display: flex;">
+                <p style="margin: 2px; display: flex; align-items: center;">
                     <strong class="strong-label">Amount:</strong>
                     <input type="text" class="simple-input" v-model="amount" placeholder="mandatory">
                 </p>
-                <p style="margin: 0;">
+                <p style="margin: 0; align-items: center;">
                     <strong class="strong-label">Currency:</strong>
                     <input type="text" class="simple-input" v-model="currency" placeholder="mandatory">
                 </p>
-                <p style="margin: 2px;">
+                <p style="margin: 2px; align-items: center;">
                     <strong class="strong-label">URLSuccess:</strong>
                     <input type="text" class="simple-input" v-model="urlsuccess">
                 </p>
@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
-                <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters:</h3>
+                <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters</h3>
                 <p style="margin: 2px;">
                     <strong class="strong-label">Template:</strong>
                     <input type="text" class="simple-input" v-model="template">
@@ -754,6 +754,10 @@ textarea {
     font-size: 12px;
     cursor: pointer;
     padding: 0 5px 0 5px;
+}
+
+.custom-padding {
+    padding: 5px;
 }
 
 .show-all-button {

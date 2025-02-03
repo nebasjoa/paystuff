@@ -7,7 +7,7 @@
             <h3 style="color: tomato;">Data is not stored on any server.</h3>
             <div class="parameters">
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Environment:</strong>
+                    <strong class="strong-label">Environment:</strong>
                     <select name="environment" id="environment" style="width: 310px;" v-model="environment">
                         <option value="dev">DEV</option>
                         <option value="test">TEST</option>
@@ -15,7 +15,7 @@
                     </select>
                 </p>
                 <p v-if="!isOtherPaymentMethod" style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Pay type:</strong>
+                    <strong class="strong-label">Pay type:</strong>
                     <select name="paytype" id="paytype" v-model="paytype" style="width: 310px;"  @click="isOtherPaymentMethod = false">
                         <option value="mandateform">EasyCollect (mandateform.aspx)</option>
                         <option value="floapay">Floapay (floapay.aspx)</option>
@@ -30,7 +30,7 @@
                     </select>
                 </p>
                 <div style="margin: 2px; align-items: center; display: flex; margin-top: 5px;">
-                    <strong style="display: inline-block; width: 150px; align-items: center; font-size: 11px">Other payment method <strong title="Use this if payment method not listed in above dropdown" class="qm-tooltip">?</strong></strong>
+                    <strong class="strong-label">Other payment method <strong title="Use this if payment method not listed in above dropdown" class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isOtherPaymentMethod" style="margin-right: 10px;">
                     <div v-if="isOtherPaymentMethod">
                         <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod" placeholder="example (example.aspx)">
@@ -39,84 +39,84 @@
                 <hr style="opacity: .2; margin: 10px;">
                 <h3 style="color: #1e5582; font-weight: 600;">Encrypted parameters:</h3>
                 <p style="margin: 2px; align-items: center; display: flex;">
-                    <strong style="display: inline-block; width: 150px; align-items: center;">MsgVer=2.0 <strong title="This parameter is required to indicate that your implementation supports 3-D Secure processing" class="qm-tooltip">?</strong></strong>
+                    <strong class="strong-label">MsgVer=2.0 <strong title="This parameter is required to indicate that your implementation supports 3-D Secure processing" class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
                 <p style="margin: 2px; align-items: center;">
-                    <strong style="display: inline-block; width: 150px; font-size: 12px; user-select: none;">Encryption
+                    <strong class="strong-label">Encryption
                         password <strong title="Received from Computop" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="secret_test" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; user-select: none;">HMAC password:</strong>
+                    <strong class="strong-label">HMAC password:</strong>
                     <input type="text" placeholder="optional" class="simple-input" v-model="hmac_password">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; user-select: none;">Merchant ID:</strong>
+                    <strong class="strong-label">Merchant ID:</strong>
                     <input type="text" class="simple-input" v-model="merchantid" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px; display: flex;">
-                    <strong style="display: inline-block; width: 150px;">Transaction ID:</strong>
+                    <strong class="strong-label">Transaction ID:</strong>
                     <input type="text" class="simple-input narrow" v-model="transid">
                     <button @click="generate_transid" class="generate-button">Generate TransID</button>
                 </p>
                 <p style="margin: 2px; display: flex;">
-                    <strong style="display: inline-block; width: 150px;">RefNr:</strong>
+                    <strong class="strong-label">RefNr:</strong>
                     <input type="text" class="simple-input" v-model="refnr">
                 </p>
                 <p style="margin: 2px; display: flex;">
-                    <strong style="display: inline-block; width: 150px;">Channel:</strong>
+                    <strong class="strong-label">Channel:</strong>
                     <input type="text" class="simple-input" v-model="channel">
                 </p>
                 <p style="margin: 2px; display: flex;">
-                    <strong style="display: inline-block; width: 150px;">Customer ID:</strong>
+                    <strong class="strong-label">Customer ID:</strong>
                     <input type="text" class="simple-input" v-model="customerid">
                 </p>
                 <p style="margin: 2px; display: flex;">
-                    <strong style="display: inline-block; width: 150px;">Amount:</strong>
+                    <strong class="strong-label">Amount:</strong>
                     <input type="text" class="simple-input" v-model="amount" placeholder="mandatory">
                 </p>
                 <p style="margin: 0;">
-                    <strong style="display: inline-block; width: 150px;">Currency:</strong>
+                    <strong class="strong-label">Currency:</strong>
                     <input type="text" class="simple-input" v-model="currency" placeholder="mandatory">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">URLSuccess:</strong>
+                    <strong class="strong-label">URLSuccess:</strong>
                     <input type="text" class="simple-input" v-model="urlsuccess">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">URLFailure:</strong>
+                    <strong class="strong-label">URLFailure:</strong>
                     <input type="text" class="simple-input" v-model="urlfailure">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">URLNotify:</strong>
+                    <strong class="strong-label">URLNotify:</strong>
                     <input type="text" class="simple-input" v-model="urlnotify">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">URLBack:</strong>
+                    <strong class="strong-label">URLBack:</strong>
                     <input type="text" class="simple-input" v-model="urlback">
                 </p>
                 <p v-if="paytype === 'paytweak'" style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 13px;">Service (Paytweak) <strong
+                    <strong class="strong-label">Service (Paytweak) <strong
                             title="Values: link|email|sms" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="paytweak_service">
                 </p>
                 <p v-if="paytype === 'paybylink'" style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 13px;">PBL expiration date:</strong>
+                    <strong class="strong-label">PBL expiration date:</strong>
                     <input type="text" class="simple-input" v-model="paybylinkexpiration"
                         placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Email:</strong>
+                    <strong class="strong-label">Email:</strong>
                     <input type="text" class="simple-input" v-model="email">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Preauth:</strong>
+                    <strong class="strong-label">Preauth:</strong>
                     <input type="checkbox" v-model="preauth_flag" disabled> <!-- disabled for now -->
                 </p>
                 <div style="margin: 2px;">
                     <div>
-                        <strong style="display: inline-block; width: 150px;">OrderDesc:</strong>
+                        <strong class="strong-label">OrderDesc:</strong>
                         <input type="text" class="simple-input" v-model="orderdesc">
                     </div>
                     <div class="order-desc-buttons">
@@ -127,7 +127,7 @@
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
-                        <strong style="display: inline-block; width: 150px;">Card:</strong>
+                        <strong class="strong-label">Card:</strong>
                         <input type="checkbox" v-model="isCard">
                     </div>
                     <div><textarea class="custom-height" v-if="isCard" rows="2" name="card" id="card"
@@ -135,7 +135,7 @@
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
-                        <strong style="display: inline-block; width: 150px; font-size: 14px;">credentialOnFile:</strong>
+                        <strong class="strong-label">credentialOnFile:</strong>
                         <input type="checkbox" v-model="isCredentialOnFile">
                     </div>
                     <div><textarea class="custom-height" v-if="isCredentialOnFile" name="cof" id="cof"
@@ -148,7 +148,7 @@
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
-                        <strong style="display: inline-block; width: 150px;">billToCustomer:</strong>
+                        <strong class="strong-label">billToCustomer:</strong>
                         <input type="checkbox" v-model="isBillToCustomer">
                     </div>
                     <div><textarea style="height: 150px;" v-if="isBillToCustomer" name="billToCustomer"
@@ -157,7 +157,7 @@
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
-                        <strong style="display: inline-block; width: 150px;">threeDsData:</strong>
+                        <strong class="strong-label">threeDsData:</strong>
                         <input type="checkbox" v-model="isThreeDsData">
                     </div>
                     <div><textarea class="custom-height" v-if="isThreeDsData" name="threeDsData" id="threeDsData"
@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px; font-size: 13px;">Other parameters <strong
+                    <strong class="strong-label">Other parameters <strong
                             title="Use this field to manually add payment specific parameters. Example: key1=value1&key2=value2. It will automatically be parsed and included in the request. Or click on Show all parameters button to add parameters on a click."
                             class="qm-tooltip">?</strong></strong>
                             <input type="checkbox" v-model="isOtherParameters">
@@ -180,31 +180,31 @@
                 <hr style="opacity: .2; margin: 10px;">
                 <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters:</h3>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Template:</strong>
+                    <strong class="strong-label">Template:</strong>
                     <input type="text" class="simple-input" v-model="template">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">CCTemplate:</strong>
+                    <strong class="strong-label">CCTemplate:</strong>
                     <input type="text" class="simple-input" v-model="cctemplate">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Pay Types:</strong>
+                    <strong class="strong-label">Pay Types:</strong>
                     <input type="text" class="simple-input" v-model="hpppaytypes">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">Language:</strong>
+                    <strong class="strong-label">Language:</strong>
                     <input type="text" class="simple-input" v-model="language">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">CustomField1:</strong>
+                    <strong class="strong-label">CustomField1:</strong>
                     <input type="text" class="simple-input" v-model="customfield1">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">CustomField2:</strong>
+                    <strong class="strong-label">CustomField2:</strong>
                     <input type="text" class="simple-input" v-model="customfield2">
                 </p>
                 <p style="margin: 2px;">
-                    <strong style="display: inline-block; width: 150px;">CustomField4:</strong>
+                    <strong class="strong-label">CustomField4:</strong>
                     <input type="text" class="simple-input" v-model="customfield4">
                 </p>
                 <div style="margin: 2px;">
@@ -218,15 +218,15 @@
         </div>
         <div class="wrapper narrower">
             <p style="margin: 2px;">
-                <strong style="display: inline-block; width: 150px;">Plain text:</strong>
+                <strong class="strong-label">Plain text:</strong>
                 <textarea readonly name="" id="">{{ plaintext }}</textarea>
             </p>
             <p style="margin: 2px;">
-                <strong style="display: inline-block; width: 150px;">Len:</strong>
+                <strong class="strong-label">Len:</strong>
                 <span>{{ len }}</span>
             </p>
             <p style="margin: 2px;">
-                <strong style="display: inline-block; width: 150px;">Encrypted data:</strong>
+                <strong class="strong-label">Encrypted data:</strong>
                 <textarea v-if="encrypted_data" name="" id="">{{ encrypted_data }}</textarea>
             </p>
         </div>
@@ -235,7 +235,7 @@
                 <h3 style="color: #1e5582; font-weight: 600;">Payment request (click on the button below to open in a new
                     tab)</h3>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <strong style="display: inline-block; width: 150px;">{{ this.paytype }}:</strong>
+                    <strong class="strong-label">{{ this.paytype }}:</strong>
                     <div style="display: flex; align-items: center;">
                         <p class="redirect-url">{{ testurl_ohne_data }}</p>
                         <a class="payment-url-button" v-if="isDataEncrypted" :href=testurl target="_blank">Call {{
@@ -817,5 +817,11 @@ canvas {
 .only-height {
     height: 100px;
     margin-top: 4px;
+}
+
+.strong-label {
+    display: inline-block; 
+    width: 200px;
+    user-select: none;
 }
 </style>

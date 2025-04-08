@@ -517,6 +517,12 @@ export default {
                 this.encrypted_data = ''
                 return 'floapay'
             }
+            else if (this.paytype === 'installment') {
+                this.isMsgVer2 = false
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
+                return 'installment'
+            }
             else {
                 this.isDataEncrypted = false
                 return '...'

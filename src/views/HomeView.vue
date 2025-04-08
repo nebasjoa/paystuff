@@ -6,9 +6,9 @@
         </div>
     </div>
     <Navbar />
-    <div class="home-view-debug">
+    <!-- <div class="home-view-debug">
         {{ this.hmac_data }}
-    </div>
+    </div> -->
     <div class="main-wrapper">
         <div class="wrapper narrower">
             <h2 style="color: #1e5582; font-weight: 600;">Paygate Encryption Test Tool</h2>

@@ -6,6 +6,9 @@
         </div>
     </div>
     <Navbar />
+    <div class="home-view-debug">
+        {{ this.hmac_data }}
+    </div>
     <div class="main-wrapper">
         <div class="wrapper narrower">
             <h2 style="color: #1e5582; font-weight: 600;">Paygate Encryption Test Tool</h2>
@@ -346,7 +349,7 @@ export default {
     },
     computed: {
         hmac_data() {
-            return `*${this.auth.merchantid}*${this.transid}*${this.amount}*${this.currency}`
+            return `*${this.transid}*${this.auth.merchantid}*${this.amount}*${this.currency}`
         },
         baseurl() {
             if (this.environment === 'dev') {
@@ -683,6 +686,10 @@ export default {
     margin: auto;
     justify-content: center;
     text-align: center;
+}
+
+.home-view-debug {
+    background-color: yellow;
 }
 
 .narrower {

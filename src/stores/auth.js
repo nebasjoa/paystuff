@@ -8,6 +8,7 @@ const useAuthStore = defineStore('auth', {
         password: 'kogDwjYjVUTX8Gp8HHqv',
         merchantid: null,
         bf_password: null,
+        hmac_password: null
     }),
 
     actions: {
@@ -16,6 +17,7 @@ const useAuthStore = defineStore('auth', {
             this.isAuthenticated = false;
             this.merchantid = null;
             this.bf_password = null;
+            this.hmac_password = null
         },
     },
 
@@ -24,6 +26,7 @@ const useAuthStore = defineStore('auth', {
         getPassword: (state) => state.password,
         getMerchantid: (state) => state.merchantid,
         getBfpassword: (state) => state.bf_password,
+        getHmacpassword: (state) => state.hmac_password,
         isLoggedIn: (state) => state.isAuthenticated,
     },
 

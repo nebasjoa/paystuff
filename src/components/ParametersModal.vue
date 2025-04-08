@@ -22,21 +22,16 @@ export default {
                 "AddrCity",
                 "AddressAddition", "AddressAddition2", "AddrStreet", "AddrStreet2",
                 "AddrStreet3", "AddrStreetNr", "AddrStreetNr2", "AddrZIP",
-                 "ArticleList", "ArticleList1", "ArticleList10", "ArticleList2", "ArticleList3", "ArticleList4",
-                "ArticleList5", "ArticleList6", "ArticleList7", "ArticleList8", "ArticleList9", "ArticleNr",
-                "bdAddressAddition", "bdCity",
+                 "ArticleList", "ArticleList1", "bdAddressAddition", "bdCity",
                 "bdCompanyOrPerson", "bdCountryCode", "bdCustomerId", "bdDateOfBirth", "bdDeviceToken", "bdDistrict",
-                "bdEmail", "bdFax", "bdFirstName", "bdLastName", "bdMaidenName", "bdMiddleName", "bdMobileNr", "bdPhone",
-                "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTaxNumber",
-                "bdTitle", "bdZIP", "Brand", "Capture", "Card",
+                "bdEmail", "bdFirstName", "bdLastName", "bdMobileNr", "bdPhone",
+                "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTitle", "bdZIP", "Brand", "Capture", "Card",
                 "CardNumber", "CcBrand", "CCCVC", "CCExpiry", "CCNr", "CCNrEnc", "ccStartDate",
-                "Channel", "ChargeAmount", "CHDesc", "CountryCode", "CustomerID", "delayedshipment",
-                "DtOfSgntr", "DueDate", "Email", "Enddate", "EntryMode", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
+                "Channel", "ChargeAmount", "CHDesc", "CountryCode", "CustomerID", "delayedShipment",
+                "DtOfSgntr", "DueDate", "Email", "Enddate", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
                 "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType",
-                "InvoiceNr", "InvoiceText", "IPAddr",
-                "Language", "LastName", "LocalAmount", "LocalCurrency", "MAC", 
-                "MandateID", "MobileNet", "MobileNr", "Month", "Name", "PayID",
-                "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID"
+                "InvoiceNr", "InvoiceText", "Language", "LastName", "LocalAmount", "MandateID", "MobileNr", "Month", "Name", "PayID",
+                "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID", "Type"
             ]
         }
     },

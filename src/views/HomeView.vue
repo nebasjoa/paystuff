@@ -26,6 +26,7 @@
                         <option value="mandateform">EasyCollect (mandateform.aspx)</option>
                         <option value="floapay">Floapay (floapay.aspx)</option>
                         <option value="paymentpage">HPP (paymentpage.aspx)</option>
+                        <option value="installment">CB2A Installments (installment.aspx)</option>
                         <option value="instanea">Instanea (instanea.aspx)</option>
                         <option value="klarnapayments">KlarnaPM (klarnapayments.aspx)</option>
                         <option value="payssl">payssl (payssl.aspx)</option>

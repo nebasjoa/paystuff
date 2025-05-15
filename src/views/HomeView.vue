@@ -229,6 +229,10 @@
                     <input type="text" class="simple-input" v-model="customfield2">
                 </p>
                 <p style="margin: 2px;">
+                    <strong class="strong-label">CustomField3:</strong>
+                    <input type="text" class="simple-input" v-model="customfield3">
+                </p>
+                <p style="margin: 2px;">
                     <strong class="strong-label">CustomField4:</strong>
                     <input type="text" class="simple-input" v-model="customfield4">
                 </p>
@@ -335,6 +339,7 @@ export default {
             billToCustomer: '{"consumer":{"salutation":"Mr","firstName":"John","lastName":"Doe"},"phone":{"countryCode":"49","subscriberNumber":"12345678910"},"mobilePhone":{"countryCode":"49","subscriberNumber":"12345678910"}}',
             customfield1: '',
             customfield2: '',
+            customfield3: '',
             customfield4: '',
             channel: '',
             customerid: '',
@@ -591,6 +596,10 @@ export default {
             }
             if (this.customfield2.length > 0) {
                 base_url = base_url + `&CustomField2=${this.customfield2}`
+
+            }
+            if (this.customfield3.length > 0) {
+                base_url = base_url + `&CustomField3=${this.customfield3}`
 
             }
             return base_url

@@ -120,6 +120,10 @@
                             class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="paytweak_service">
                 </p>
+                <p v-if="paytype === 'paytweak'" style="margin: 2px;">
+                    <strong class="strong-label">Reminder email</strong>
+                    <input type="text" class="simple-input" v-model="paytweak_reminder_email">
+                </p>
                 <p v-if="paytype === 'paybylink'" style="margin: 2px;">
                     <strong class="strong-label">PBL expiration date:</strong>
                     <input type="text" class="simple-input" v-model="paybylinkexpiration"
@@ -313,6 +317,7 @@ export default {
             len: 0,
             paytype: 'paymentpage',
             paytweak_service: 'link',
+            paytweak_reminder_email: '{"ResendAfter":"1","MaxAttempts":"1"}',
             preauth_flag: false,
             isCard: false,
             card: '{"securityCode":"123","expiryDate":"202906","cardholderName":"John Doe","number":"4111111111111111","brand":"VISA"}',
@@ -392,6 +397,7 @@ export default {
 
             if (this.paytype === 'paytweak') {
                 params.Service = this.paytweak_service;
+                params.reminderEmail = btoa(this.paytweak_reminder_email)
             }
 
             if (this.paytype === 'mandate') {

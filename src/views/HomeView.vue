@@ -393,7 +393,7 @@ export default {
                 "URLNotify": this.urlnotify,
                 "URLBack": this.urlback,
                 "email": this.email,
-                "OrderDesc": this.orderdesc,
+                "OrderDesc": this.orderdesc
             };
 
             if (this.isMsgVer2) {
@@ -447,6 +447,10 @@ export default {
 
             if (this.channel.length > 0) {
                 params.Channel = this.channel;
+            }
+
+            if (this.customerid.length > 0) {
+                params.CustomerID = this.customerid;
             }
 
             if (this.refnr.length > 0) {

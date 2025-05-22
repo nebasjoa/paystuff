@@ -328,7 +328,7 @@ export default {
             len: 0,
             paytype: 'paymentpage',
             paytweak_service: 'link',
-            paytweak_reminder_email: '{"ResendAfter":"1","MaxAttempts":"1"}',
+            paytweak_reminder_email: '{"ResendAfterDays":"1","MaxAttempts":"1"}',
             preauth_flag: false,
             isCard: false,
             card: '{"securityCode":"123","expiryDate":"202906","cardholderName":"John Doe","number":"4111111111111111","brand":"VISA"}',

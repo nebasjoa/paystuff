@@ -18,7 +18,7 @@ export default {
     data() {
         return {
             parameters: [
-               "AccessToken", "Account", "AccountId", "AccOwner", "AccType", "AccVerify",
+               "AboAction", "AccessToken", "Account", "AccountId", "AccOwner", "AccType", "AccVerify",
                 "AddrCity",
                 "AddressAddition", "AddressAddition2", "AddrStreet", "AddrStreet2",
                 "AddrStreet3", "AddrStreetNr", "AddrStreetNr2", "AddrZIP",
@@ -27,11 +27,11 @@ export default {
                 "bdEmail", "bdFirstName", "bdLastName", "bdMobileNr", "bdPhone",
                 "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTitle", "bdZIP", "Brand", "Capture", "Card",
                 "CardNumber", "CcBrand", "CCCVC", "CCExpiry", "CCNr", "CCNrEnc", "ccStartDate",
-                "Channel", "ChargeAmount", "CHDesc", "CountryCode", "CustomerID", "delayedShipment",
-                "DtOfSgntr", "DueDate", "Email", "Enddate", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
-                "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType",
-                "InvoiceNr", "InvoiceText", "Language", "LastName", "LocalAmount", "MandateID", "MobileNr", "Month", "Name", "PayID",
-                "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID", "Type"
+                "Channel", "ChargeAmount", "CHDesc", "CountryCode", "delayedShipment",
+                "DtOfSgntr", "DueDate", "Email", "EndDate", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
+                "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType", "Interval",
+                "InvoiceNr", "Language", "LastName", "MandateID", "MobileNr", "Month", "Name", "PayID",
+                "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID", "StartDate", "Type"
             ]
         }
     },

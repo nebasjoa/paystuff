@@ -133,7 +133,7 @@
                     <input type="text" class="simple-input" v-model="paybylinkexpiration"
                         placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
-                <p style="margin: 2px;">
+                <div style="margin: 2px;">
                 <div>
                     <strong class="strong-label">Email:</strong>
                     <input type="text" class="simple-input" v-model="email">
@@ -143,7 +143,7 @@
                         title="Use this for simulating successful payment">@computop.com</button>
                     <button class="order-desc-button" @click="this.email = '@gmail.com'">@gmail.com</button>
                 </div>
-                </p>
+                </div>
                 <p style="margin: 2px;">
                     <strong class="strong-label">Preauth:</strong>
                     <input type="checkbox" v-model="preauth_flag" disabled> <!-- disabled for now -->
@@ -197,6 +197,24 @@
                     </div>
                     <div><textarea class="custom-height" v-if="isThreeDsData" name="threeDsData" id="threeDsData"
                             v-model="threeDsData"></textarea>
+                    </div>
+                </div>
+                <div style="margin: 2px; display: flex; flex-direction: column;">
+                    <div>
+                        <strong class="strong-label">threeDsPolicy:</strong>
+                        <input type="checkbox" v-model="isThreeDsPolicy">
+                    </div>
+                    <div><textarea class="custom-height" v-if="isThreeDsPolicy" name="threeDsData" id="threeDsData"
+                            v-model="threeDsData"></textarea>
+                    </div>
+                </div>
+                <div style="margin: 2px; display: flex; flex-direction: column;">
+                    <div>
+                        <strong class="strong-label">browserInfo:</strong>
+                        <input type="checkbox" v-model="isBrowserInfo">
+                    </div>
+                    <div><textarea class="custom-height" v-if="isBrowserInfo" name="browserIno" id="browserInfo"
+                            v-model="browserInfo"></textarea>
                     </div>
                 </div>
                 <div style="margin: 2px;">
@@ -364,6 +382,8 @@ export default {
             isOtherParameters: false,
             isOtherPaymentMethod: false,
             otherpaymentmethod: '',
+            browserInfo: '{"timeZoneOffset":"120","acceptHeaders":"text","ipAddress":"93.176.166.240","javaEnabled":false,"javaScriptEnabled":true,"language":"US","colorDepth":32,"screenWidth":1060,"screenHeight":1050,"userAgent":"Mozilla/5.0"}',
+            isBrowserInfo: false,
         }
     },
     components: {
@@ -478,6 +498,10 @@ export default {
 
             if (this.isThreeDsData) {
                 params.threeDsData = btoa(this.threeDsData);
+            }
+
+            if (this.isBrowserInfo) {
+                params.browserInfo = btoa(this.browserInfo);
             }
 
             if (this.isBillToCustomer) {

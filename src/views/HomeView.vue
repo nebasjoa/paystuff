@@ -10,7 +10,7 @@
     <!-- <div class="home-view-debug">
 {{ this.hmac_data }}
 </div> -->
-    <div class="main-wrapper">
+    <div class="main-wrapper" @mousedown="handleParentClick">
         <div class="wrapper narrower">
             <h2 style="color: #1e5582; font-weight: 600;">Paygate Encryption Test Tool</h2>
             <h3 style="color: tomato;">Data is not stored on any server.</h3>
@@ -134,15 +134,15 @@
                         placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
                 <div style="margin: 2px;">
-                <div>
-                    <strong class="strong-label">Email:</strong>
-                    <input type="text" class="simple-input" v-model="email">
-                </div>
-                <div class="order-desc-buttons only-margin">
-                    <button class="order-desc-button" @click="this.email = '@computop.com'"
-                        title="Use this for simulating successful payment">@computop.com</button>
-                    <button class="order-desc-button" @click="this.email = '@gmail.com'">@gmail.com</button>
-                </div>
+                    <div>
+                        <strong class="strong-label">Email:</strong>
+                        <input type="text" class="simple-input" v-model="email">
+                    </div>
+                    <div class="order-desc-buttons only-margin">
+                        <button class="order-desc-button" @click="this.email = '@computop.com'"
+                            title="Use this for simulating successful payment">@computop.com</button>
+                        <button class="order-desc-button" @click="this.email = '@gmail.com'">@gmail.com</button>
+                    </div>
                 </div>
                 <p style="margin: 2px;">
                     <strong class="strong-label">Preauth:</strong>
@@ -316,7 +316,7 @@
         </div>
     </div>
     <LoginModal />
-    <ParametersModal v-show="isParametersModal" @close="isParametersModal = false"
+    <ParametersModal v-show="isParametersModal" @close="isParametersModal = false" ref="menu"
         @setparameter="handleReceivedParameter" />
 </template>
 
@@ -660,6 +660,7 @@ export default {
             }
             this.transid = transid
             this.isDataEncrypted = false
+            this.encrypted_data = ''
         },
         encryptData(data) {
             this.encrypted_data = CryptoJS.Blowfish.encrypt(data, CryptoJS.enc.Utf8.parse(this.auth.bf_password), {
@@ -695,6 +696,13 @@ export default {
             }
 
         },
+        handleParentClick(event) {
+            const menu = this.$refs.menu;
+            const el = menu?.$el || menu; // use $el if it's a component
+            if (el && !el.contains(event.target)) {
+                this.isParametersModal = false;
+            }
+        },
     },
     mounted() {
         this.generate_transid()
@@ -719,6 +727,11 @@ export default {
             }
             if (newValue.startsWith('&')) {
                 this.otherparams = newValue.slice(0);
+            }
+        },
+        isOtherParameters(newVal) {
+            if (!newVal) {
+                this.otherparams = '';
             }
         },
     },

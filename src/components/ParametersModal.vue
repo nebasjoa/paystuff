@@ -25,7 +25,7 @@ export default {
                  "ArticleList", "ArticleList1", "bdAddressAddition", "bdCity",
                 "bdCompanyOrPerson", "bdCountryCode", "bdCustomerId", "bdDateOfBirth", "bdDeviceToken", "bdDistrict",
                 "bdEmail", "bdFirstName", "bdLastName", "bdMobileNr", "bdPhone",
-                "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTitle", "bdZIP", "Brand", "Capture", "Card",
+                "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTitle", "bdZIP", "Brand", "browserInfo", "Capture", "Card",
                 "CardNumber", "CcBrand", "CCCVC", "CCExpiry", "CCNr", "CCNrEnc", "ccStartDate",
                 "Channel", "ChargeAmount", "CHDesc", "CountryCode", "delayedShipment",
                 "DtOfSgntr", "DueDate", "Email", "EndDate", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",

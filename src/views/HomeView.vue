@@ -164,7 +164,7 @@
                         <strong class="strong-label">Card:</strong>
                         <input type="checkbox" v-model="isCard">
                     </div>
-                    <div><textarea class="custom-height" v-if="isCard" rows="2" name="card" id="card"
+                    <div><textarea class="custom-height" v-if="isCard" :rows="rows(card)" name="card" id="card"
                             v-model="card"></textarea></div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
@@ -173,7 +173,7 @@
                         <input type="checkbox" v-model="isCredentialOnFile">
                     </div>
                     <div><textarea class="custom-height" v-if="isCredentialOnFile" name="cof" id="cof"
-                            v-model="credentialOnFile"></textarea>
+                            v-model="credentialOnFile" :rows="rows(credentialOnFile)"></textarea>
                     </div>
                     <div v-if="isCredentialOnFile" class="cof-buttons">
                         <button class="cof-button">MIT</button>
@@ -187,7 +187,7 @@
                         <input type="checkbox" v-model="isBillToCustomer">
                     </div>
                     <div><textarea style="height: 150px;" v-if="isBillToCustomer" name="billToCustomer"
-                            id="billToCustomer" v-model="billToCustomer"></textarea>
+                            id="billToCustomer" v-model="billToCustomer" :rows="rows(billToCustomer)"></textarea>
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
@@ -277,7 +277,7 @@
         <div class="wrapper narrower">
             <p style="margin: 2px;">
                 <strong class="strong-label">Plain text:</strong>
-                <textarea readonly name="" id="">{{ plaintext }}</textarea>
+                <textarea readonly name="" id="" :rows="rows(plaintext)">{{ plaintext }}</textarea>
             </p>
             <p style="margin: 2px;">
                 <strong class="strong-label">Len:</strong>
@@ -285,7 +285,7 @@
             </p>
             <p style="margin: 2px;">
                 <strong class="strong-label">Encrypted data:</strong>
-                <textarea v-if="encrypted_data" name="" id="">{{ encrypted_data }}</textarea>
+                <textarea v-if="encrypted_data" name="" id="" :rows="rows(encrypted_data)">{{ encrypted_data }}</textarea>
             </p>
         </div>
         <div style="margin: 0;">
@@ -384,6 +384,7 @@ export default {
             otherpaymentmethod: '',
             browserInfo: '{"timeZoneOffset":"120","acceptHeaders":"text","ipAddress":"93.176.166.240","javaEnabled":false,"javaScriptEnabled":true,"language":"US","colorDepth":32,"screenWidth":1060,"screenHeight":1050,"userAgent":"Mozilla/5.0"}',
             isBrowserInfo: false,
+            isThreeDsPolicy: false,
         }
     },
     components: {
@@ -703,6 +704,9 @@ export default {
                 this.isParametersModal = false;
             }
         },
+        rows(e) {
+            return Math.ceil(e.length / 69 ) + 1
+        },
     },
     mounted() {
         this.generate_transid()
@@ -814,7 +818,7 @@ select {
 
 textarea {
     width: 500px;
-    height: 200px;
+    /* height: 200px; */
     resize: none;
     border-radius: 10px;
     outline: none;

@@ -139,9 +139,9 @@
                         <input type="text" class="simple-input" v-model="email">
                     </div>
                     <div class="order-desc-buttons only-margin">
-                        <button class="order-desc-button" @click="this.email = '@computop.com'"
+                        <button class="order-desc-button" @click="this.email = this.email + '@computop.com'"
                             title="Use this for simulating successful payment">@computop.com</button>
-                        <button class="order-desc-button" @click="this.email = '@gmail.com'">@gmail.com</button>
+                        <button class="order-desc-button" @click="this.email = this.email + '@gmail.com'">@gmail.com</button>
                     </div>
                 </div>
                 <p style="margin: 2px;">

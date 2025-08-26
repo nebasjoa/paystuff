@@ -30,7 +30,7 @@ export default {
                 "Channel", "ChargeAmount", "CHDesc", "CountryCode", "delayedShipment",
                 "DtOfSgntr", "DueDate", "Email", "EndDate", "ETIID", "Event", "EventToken", "Expiration", "ExpirationDate", "ExpirationTime",
                 "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType", "Interval",
-                "InvoiceNr", "Language", "LastName", "MandateID", "MobileNr", "Month", "Name", "PayID",
+                "InvoiceNr", "Language", "LastName", "MandateID", "MobileNr", "Month", "Name", "OrderId", "PayID",
                 "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID", "StartDate", "Type"
             ]
         }

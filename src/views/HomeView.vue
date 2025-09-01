@@ -508,6 +508,12 @@ export default {
                 params.threeDsData = btoa(this.threeDsData);
             }
 
+            if (this.isThreeDsPolicy) {
+                params.threeDsPolicy = btoa(this.threeDsPolicy);
+            }
+
+            
+
             if (this.isBrowserInfo) {
                 params.browserInfo = btoa(this.browserInfo);
             }

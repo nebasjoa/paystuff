@@ -209,7 +209,7 @@
                         <input type="checkbox" v-model="isThreeDsPolicy">
                     </div>
                     <div><textarea class="custom-height" v-if="isThreeDsPolicy" name="threeDsData" id="threeDsData"
-                            v-model="threeDsData"></textarea>
+                            v-model="threeDsPolicy"></textarea>
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">

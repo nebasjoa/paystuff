@@ -197,15 +197,12 @@
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
                         <strong class="strong-label">billingAddress:</strong>
-                        <input type="checkbox" v-model="isBillToCustomer">
+                        <input type="checkbox" v-model="isBillingAddress">
                     </div>
-                    <div><textarea style="height: 150px;" v-if="isBillToCustomer" name="billToCustomer"
-                            id="billToCustomer" v-model="billingAddress" :rows="rows(billToCustomer)"></textarea>
+                    <div><textarea style="height: 150px;" v-if="isBillingAddress" name="billToCustomer"
+                            id="billToCustomer" v-model="billingAddress" :rows="rows(billingAddress)"></textarea>
                     </div>
                 </div>
-
-
-                
                 <div style="margin: 2px; display: flex; flex-direction: column;">
                     <div>
                         <strong class="strong-label">threeDsData:</strong>

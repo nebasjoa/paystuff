@@ -41,6 +41,7 @@
                         <option value="twintpp">TWINT via PPRO (twintpp.aspx)</option>
                         <option value="---" disabled>----------------</option>
                         <option value="credit">Refund (credit.aspx)</option>
+                        <option value="increment">Increment (increment.aspx)</option>
                     </select>
                 </p>
                 <div style="margin: 2px; align-items: center; display: flex; margin-top: 5px;">
@@ -632,6 +633,21 @@ export default {
                 return 'credit'
 
             }
+
+            else if (this.paytype === 'increment') {
+                this.isMsgVer2 = false
+                this.isDataEncrypted = false
+                this.encrypted_data = ''
+                this.urlsuccess = ''
+                this.urlfailure = ''
+                this.urlback = ''
+                this.urlnotify = ''
+                this.isOtherParameters = true
+                this.otherparams='PayID='
+                return 'increment'
+
+            }
+
             else {
                 this.isDataEncrypted = false
                 return '...'

@@ -116,14 +116,20 @@
                     <strong class="strong-label">URLBack:</strong>
                     <input type="text" class="simple-input" v-model="urlback">
                 </p>
-                <p style="margin: 2px;">
+                <div style="margin: 2px; display: flex;">
                     <strong class="strong-label">ArticleList:</strong>
+                    <div style="display: flex; gap: 5px;">
                     <input type="text" class="simple-input" v-model="articlelist">
-                </p>
-                <p style="margin: 2px;">
+                    <input type="checkbox" v-model="isArticleList" @click="isArticleList = !isArticleList">
+                    </div>
+                </div>
+                <div style="margin: 2px;  display: flex;">
                     <strong class="strong-label">OrderItem:</strong>
+                    <div style="display: flex; gap: 5px;">
                     <input type="text" class="simple-input" v-model="orderitem">
-                </p>
+                    <input type="checkbox" v-model="isOrderItem" @click="isOrderItem = !isOrderItem">
+                    </div>
+                </div>
                 <p v-if="paytype === 'paytweak'" style="margin: 2px;">
                     <strong class="strong-label">Service (Paytweak) <strong title="Values: link|email|sms"
                             class="qm-tooltip">?</strong></strong>
@@ -425,6 +431,8 @@ export default {
             billingAddress: '{"city":"Cacakongma","country":{"countryA3":"SRB","countryA2":"SR"},"postalCode":"80331","addressLine1":{"street":"test street","streetNumber":"10"}}',
             isBillingAddress: false,
             tokenData: '{"ECI":"07","TokenCryptogram":"AgAAAAAAAIR8CQrXcIhbQAAAAAA=","TokenRequestorID":"40000000082"}',
+            isArticleList: false,
+            isOrderItem: false,
         }
     },
     components: {
@@ -466,9 +474,15 @@ export default {
                 "URLBack": this.urlback,
                 "email": this.email,
                 "OrderDesc": this.orderdesc,
-                "OrderItem": btoa(this.orderitem),
-                "ArticleList": btoa(this.articlelist),
             };
+
+            if (this.isOrderItem) {
+                params.OrderItem = btoa(this.orderitem);
+            }
+
+            if (this.isArticleList) {
+                params.ArticleList = btoa(this.articlelist);
+            }
 
             if (this.isMsgVer2) {
                 params.MsgVer = "2.0";

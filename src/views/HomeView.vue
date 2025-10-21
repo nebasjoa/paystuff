@@ -119,15 +119,15 @@
                 <div style="margin: 2px; display: flex;">
                     <strong class="strong-label">ArticleList:</strong>
                     <div style="display: flex; gap: 5px;">
-                    <input type="text" class="simple-input" v-model="articlelist">
-                    <input type="checkbox" v-model="isArticleList" @click="isArticleList = !isArticleList">
+                        <input type="text" class="simple-input" v-model="articlelist">
+                        <input type="checkbox" v-model="isArticleList" @click="isArticleList = !isArticleList">
                     </div>
                 </div>
                 <div style="margin: 2px;  display: flex;">
                     <strong class="strong-label">OrderItem:</strong>
                     <div style="display: flex; gap: 5px;">
-                    <input type="text" class="simple-input" v-model="orderitem">
-                    <input type="checkbox" v-model="isOrderItem" @click="isOrderItem = !isOrderItem">
+                        <input type="text" class="simple-input" v-model="orderitem">
+                        <input type="checkbox" v-model="isOrderItem" @click="isOrderItem = !isOrderItem">
                     </div>
                 </div>
                 <p v-if="paytype === 'paytweak'" style="margin: 2px;">
@@ -231,6 +231,7 @@
                             <button class="cof-button" @click="setSkipThreeDs">Skip 3DS</button>
                             <button class="cof-button" @click="mandateChallenge">Mandate challenge</button>
                             <button class="cof-button" @click="tra">TRA</button>
+                            <button class="cof-button" @click="lowvalue">Low Value</button>
                         </div>
                     </div>
                 </div>
@@ -398,7 +399,8 @@ export default {
             isDataEncrypted: false,
             isCredentialOnFile: false,
             isThreeDsData: false,
-            threeDsData: '{"challengeRequestInd":"04"}',
+            // threeDsData: '{"challengeRequestInd":"04"}',
+            threeDsData: '{"acsProtocolVersion":"2.2.0","authenticationValue":"kAMACEJBakKSOSzNLnxNiZeBQnf+","eci":"02","threeDSServerTransID":"a3dd2b66-6c06-423b-acd4-1cc19697a08f","dsTransID":"9e0e91c0-24e3-423c-a136-97023269d580","intermediateStatus":"Y","finalStatus":"Y"}',
             credentialOnFile: '{"type":{"recurring":{"recurringFrequency":30,"recurringStartDate":"2025-09-14","recurringExpiryDate":"2025-09-14"}},"initialPayment":true}',
             hmac_password: '',
             template: '',
@@ -747,7 +749,11 @@ export default {
         },
         tra() {
             this.threeDsPolicy = ''
-            this.threeDsPolicy = '"threeDSExemption": {"exemptionReason": "transactionRiskAnalysis", "merchantFraudRate": 4}'
+            this.threeDsPolicy = '{"threeDSExemption": {"exemptionReason": "transactionRiskAnalysis", "merchantFraudRate": 4}}'
+        },
+        lowvalue() {
+            this.threeDsPolicy = ''
+            this.threeDsPolicy = '{"threeDSExemption": {"exemptionReason": "lowValue"}}'
         },
         generate_transid() {
             let transid = '';

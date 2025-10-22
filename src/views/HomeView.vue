@@ -188,9 +188,12 @@
                             v-model="credentialOnFile" :rows="rows(credentialOnFile)"></textarea>
                     </div>
                     <div v-if="isCredentialOnFile" class="cof-buttons">
-                        <button class="cof-button">MIT</button>
                         <button class="cof-button" @click="setCit">CIT</button>
-                        <button class="cof-button" @click="setInstallments">Installments</button>
+                        <button class="cof-button" @click="setCitC">CIT (RTF=C)</button>
+                        <button class="cof-button" @click="setMitE">MIT (RTF=E)</button>
+                        <button class="cof-button" @click="setMitM">MIT (RTF=M)</button>
+                        <button class="cof-button" @click="setInstallments">Installments (RTF=I)</button>
+                        <button class="cof-button" @click="setInstallmentsR">Installments (RTF=R)</button>
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
@@ -735,9 +738,25 @@ export default {
             this.credentialOnFile = ''
             this.credentialOnFile = '{"type":{"unscheduled":"CIT"},"initialPayment":true}'
         },
+        setCitC() {
+            this.credentialOnFile = ''
+            this.credentialOnFile = '{"type":{"unscheduled":"CIT"},"initialPayment":false}'
+        },
+        setMitE() {
+            this.credentialOnFile = ''
+            this.credentialOnFile = '{"type":{"unscheduled":"MIT"},"initialPayment":true}'
+        },
+        setMitM() {
+            this.credentialOnFile = ''
+            this.credentialOnFile = '{"type":{"unscheduled":"MIT"},"initialPayment":false}'
+        },
         setInstallments() {
             this.credentialOnFile = ''
             this.credentialOnFile = '{"type":{"installments":{"total":3,"curIdx":1,"purchaseAmount":10000}},"initialPayment":true}'
+        },
+        setInstallmentsR() {
+            this.credentialOnFile = ''
+            this.credentialOnFile = '{"type":{"installments":{"total":3,"curIdx":1,"purchaseAmount":10000}},"initialPayment":false}'
         },
         setSkipThreeDs() {
             this.threeDsPolicy = ''

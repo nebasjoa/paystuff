@@ -2,13 +2,19 @@
     <div class="parameters-wrapper">
         <div class="close-button-wrapper"><button class="close-button"
                 @click="this.$emit('close')"><strong>X</strong></button>
-            </div>
-            <div>
-                <h3 style="color: #1e5582; text-align: center; margin-bottom: 10px;">Click on a desired parameter - it will be added to Other parameters field</h3>
-            </div>
+        </div>
+        <div>
+            <h3 style="color: #1e5582; text-align: center; margin-bottom: 10px;">Click on a desired parameter - it will
+                be added to Other parameters field</h3>
+        </div>
         <div>
             <button class="simple-button" v-for="parameter in parameters"
                 @click="this.$emit('setparameter', parameter)">{{ parameter }}</button>
+        </div>
+        <hr style="margin: 10px 0 10px 0; opacity: .2;">
+        <div>
+            <button class="simple-button"
+                @click="this.$emit('setparameter', googlepayparams)">GooglePay</button>
         </div>
     </div>
 </template>
@@ -18,11 +24,11 @@ export default {
     data() {
         return {
             parameters: [
-               "AboAction", "AccessToken", "Account", "AccountId", "AccOwner", "AccType", "AccVerify",
+                "AboAction", "AccessToken", "Account", "AccountId", "AccOwner", "AccType", "AccVerify",
                 "AddrCity",
                 "AddressAddition", "AddressAddition2", "AddrStreet", "AddrStreet2",
                 "AddrStreet3", "AddrStreetNr", "AddrStreetNr2", "AddrZIP",
-                 "ArticleList", "ArticleList1", "bdAddressAddition", "bdCity",
+                "ArticleList", "ArticleList1", "bdAddressAddition", "bdCity",
                 "bdCompanyOrPerson", "bdCountryCode", "bdCustomerId", "bdDateOfBirth", "bdDeviceToken", "bdDistrict",
                 "bdEmail", "bdFirstName", "bdLastName", "bdMobileNr", "bdPhone",
                 "bdPOBox", "bdSalutation", "bdState", "bdStreet", "bdStreet2", "bdStreetNr", "bdSuffix", "bdTitle", "bdZIP", "Brand", "browserInfo", "Capture", "Card",
@@ -32,7 +38,8 @@ export default {
                 "Expiry", "FirstName", "Gender", "Homepage", "IBAN", "industrySpecificTxType", "Interval",
                 "InvoiceNr", "Language", "LastName", "MandateID", "MobileNr", "Month", "Name", "OrderId", "PayID",
                 "PayType", "Phone", "PhoneAreaCode", "schemeReferenceID", "StartDate", "Type"
-            ]
+            ],
+            googlepayparams: 'PayType=GooglePay&GooglePayMethod=TOKENIZED_CARD&TOKENIZED_CARD=yes&ECI=05&TokenECIOriginal=05&ccFraud=ignore&CCExpiry=202801&vbv=no&CCNr=4300029510000001&RTF=C&CAVV=kAMACEJBakKSOSzNLnxNiZeBQnf+&CCBrand=VISA',
         }
     },
     emits: ['close']

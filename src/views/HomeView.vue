@@ -484,6 +484,7 @@ export default {
                 "URLNotify": this.urlnotify,
                 "URLBack": this.urlback,
                 "email": this.email,
+                "OrderDesc": this.orderdesc,
             };
 
             if (this.isOrderItem) {

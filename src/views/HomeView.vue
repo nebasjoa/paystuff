@@ -799,7 +799,7 @@ export default {
             this.threeDsPolicy = '{"threeDSExemption": {"exemptionReason": "lowValue"}}'
         },
         generate_transid() {
-            let transid = '';
+            let transid = 'NEBO_';
             for (let i = 0; i < 10; i++) {
                 transid += Math.floor(Math.random() * 10); // Generates a random digit (0-9)
             }

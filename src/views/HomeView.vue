@@ -508,6 +508,12 @@ export default {
                 //
             }
 
+            if (this.paytype === 'direct') {
+                delete params.URLSuccess;
+                delete params.URLFailure;
+                delete params.URLBack;
+            }
+
             if (this.paytype === 'paybylink') {
                 params.ExpirationDate = this.paybylinkexpiration;
             }
@@ -635,6 +641,11 @@ export default {
                 this.isMsgVer2 = true
                 this.isDataEncrypted = false
                 this.encrypted_data = ''
+                this.isOtherParameters = true
+                this.otherparams = 'PayType=CB2A'
+                this.isBrowserInfo = true
+                this.isThreeDsData = true
+                this.isCard = true
                 return 'direct'
             } else if (this.paytype === 'instanea') {
                 this.isMsgVer2 = false

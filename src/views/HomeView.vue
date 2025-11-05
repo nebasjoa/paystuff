@@ -1,11 +1,11 @@
 <template>
     <Header />
-    <div class="info-div-wrapper">
+    <!-- <div class="info-div-wrapper">
         <div class="info-div">
             REST API testing tool: <span style="margin-left: 5px;"><a href="https://paygaterest.vercel.app"
                     target="_blank">link</a></span>
         </div>
-    </div>
+    </div> -->
     <Navbar />
     <!-- <div class="home-view-debug">
 {{ this.hmac_data }}

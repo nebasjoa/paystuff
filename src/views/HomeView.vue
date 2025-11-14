@@ -599,8 +599,13 @@ export default {
             }
 
             this.otherparamsarray.forEach(element => {
-                let [key, value] = element.split('=');
-                if (key) params[key] = value;
+                const idx = element.indexOf("=");
+
+                if (idx !== -1) {
+                    const key = element.substring(0, idx);
+                    const value = element.substring(idx + 1); // includes trailing '=' if present
+                    params[key] = value;
+                }
             });
 
             // Convert the object to a query string format

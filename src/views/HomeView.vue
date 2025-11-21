@@ -49,9 +49,13 @@
                             title="Use this if payment method not listed in above dropdown"
                             class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isOtherPaymentMethod" style="margin-right: 10px;">
-                    <div v-if="isOtherPaymentMethod">
+                    <div v-if="isOtherPaymentMethod" class="other-wrapper">
                         <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod"
                             placeholder="example (example.aspx)">
+                        <div style="display: flex; margin-top: 3px;">
+                            <button class="cof-button" @click="otherpaymentmethod = 'reverse'">reverse.aspx</button>
+                            <button class="cof-button" @click="otherpaymentmethod = 'credit'">credit.aspx</button>
+                        </div>
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
@@ -544,6 +548,17 @@ export default {
                     bdCountryCode: 'DE',
                     Account: '1',
                 });
+            }
+
+            if (this.otherpaymentmethod === 'reverse') {
+                delete params.URLSuccess;
+                delete params.URLFailure;
+                delete params.URLBack;
+                delete params.URLNotify;
+                delete params.ArticleList;
+                delete params.OrderDesc;
+                delete params.MsgVer;
+                delete params.email;
             }
 
             if (this.preauth_flag) {

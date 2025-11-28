@@ -11,19 +11,20 @@
 {{ this.hmac_data }}
 </div> -->
     <div class="main-wrapper" @mousedown="handleParentClick">
-        <div class="wrapper narrower">
-            <h2 style="color: #1e5582; font-weight: 600;">Paygate Encryption Test Tool</h2>
-            <h3 style="color: tomato;">Data is not stored on any server.</h3>
+        <div style="display: flex; margin: auto; gap: 20px; width: 100%;">
+        <div class="wrapper">
+            <h3 style="color: #1e5582; font-weight: 600;">Paygate Encryption Test Tool</h3>
+            <h4 style="color: tomato;">Data is not stored on any server.</h4>
             <div class="parameters">
-                <p style="margin: 2px;">
+                <div class="simple-wrapper">
                     <strong class="strong-label">Environment:</strong>
                     <select name="environment" id="environment" style="width: 310px;" v-model="environment">
                         <option value="dev">DEV</option>
                         <option value="test">TEST</option>
                         <option value="prod">PRODUCTION</option>
                     </select>
-                </p>
-                <p v-if="!isOtherPaymentMethod" style="margin: 2px;">
+                </div>
+                <p v-if="!isOtherPaymentMethod" class="simple-wrapper">
                     <strong class="strong-label">Pay type:</strong>
                     <select name="paytype" id="paytype" v-model="paytype" style="width: 310px;"
                         @click="isOtherPaymentMethod = false">
@@ -44,11 +45,11 @@
                         <option value="increment">Increment (increment.aspx)</option>
                     </select>
                 </p>
-                <div style="margin: 2px; align-items: center; display: flex; margin-top: 5px;">
-                    <strong class="strong-label">Other payment method <strong
+                <div class="simple-wrapper">
+                    <strong class="strong-label">Other pay type <strong
                             title="Use this if payment method not listed in above dropdown"
                             class="qm-tooltip">?</strong></strong>
-                    <input type="checkbox" v-model="isOtherPaymentMethod" style="margin-right: 10px;">
+                    <input type="checkbox" v-model="isOtherPaymentMethod">
                     <div v-if="isOtherPaymentMethod" class="other-wrapper">
                         <input class="simple-input" style="width: 275px;" type="text" v-model="otherpaymentmethod"
                             placeholder="example (example.aspx)">
@@ -59,70 +60,70 @@
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
-                <h3 style="color: #1e5582; font-weight: 600;">Encrypted parameters</h3>
-                <p style="margin: 2px; align-items: center; display: flex;">
+                <h4 style="color: #1e5582; font-weight: 600; margin-bottom: 4px;">Encrypted parameters</h4>
+                <p class="simple-wrapper">
                     <strong class="strong-label">MsgVer=2.0 <strong
                             title="This parameter is required to indicate that your implementation supports 3-D Secure processing"
                             class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isMsgVer2">
                 </p>
-                <p style="margin: 2px; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Encryption
                         password <strong title="Received from Computop" class="qm-tooltip">?</strong></strong>
                     <input type="text" class="simple-input" v-model="this.auth.bf_password" placeholder="(mandatory)">
                 </p>
-                <p style="margin: 2px;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">HMAC password:</strong>
                     <input type="text" placeholder="(optional)" class="simple-input" v-model="hmac_password">
                 </p>
-                <p style="margin: 2px;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Merchant ID:</strong>
                     <input type="text" class="simple-input" v-model="this.auth.merchantid" placeholder="(mandatory)">
                 </p>
-                <p style="margin: 2px; display: flex; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Transaction ID:</strong>
                     <input type="text" class="simple-input narrow" v-model="transid">
                     <button @click="generate_transid" class="generate-button custom-padding">Generate TransID</button>
                 </p>
-                <p style="margin: 2px; display: flex; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">RefNr:</strong>
                     <input type="text" class="simple-input" v-model="refnr">
                 </p>
-                <p style="margin: 2px; display: flex; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Channel:</strong>
                     <input type="text" class="simple-input" v-model="channel">
                 </p>
-                <p style="margin: 2px; display: flex; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Customer ID:</strong>
                     <input type="text" class="simple-input" v-model="customerid">
                 </p>
-                <p style="margin: 2px; display: flex; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Amount:</strong>
                     <input type="text" class="simple-input" v-model="amount" placeholder="(mandatory)">
                 </p>
-                <p style="margin: 0; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">Currency:</strong>
                     <input type="text" class="simple-input" v-model="currency" placeholder="(mandatory)">
                 </p>
-                <p style="margin: 2px; align-items: center;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">URLSuccess:</strong>
                     <input type="text" class="simple-input" v-model="urlsuccess">
                 </p>
-                <p style="margin: 2px;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">URLFailure:</strong>
                     <input type="text" class="simple-input" v-model="urlfailure">
                 </p>
-                <p style="margin: 2px;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">URLNotify:</strong>
                     <input type="text" class="simple-input" v-model="urlnotify">
                 </p>
-                <p style="margin: 2px;">
+                <p class="simple-wrapper">
                     <strong class="strong-label">URLBack:</strong>
                     <input type="text" class="simple-input" v-model="urlback">
                 </p>
                 <div style="margin: 2px; display: flex;">
                     <strong class="strong-label">ArticleList:</strong>
-                    <div style="display: flex; gap: 5px;">
+                    <div class="simple-wrapper">
                         <input type="text" class="simple-input" v-model="articlelist">
                         <input type="checkbox" v-model="isArticleList" @click="isArticleList = !isArticleList">
                     </div>
@@ -149,7 +150,7 @@
                         placeholder="YYYY-MM-DD HH:MM:SS">
                 </p>
                 <div style="margin: 2px;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">Email:</strong>
                         <input type="text" class="simple-input" v-model="email">
                     </div>
@@ -160,12 +161,12 @@
                             @click="this.email = this.email + '@gmail.com'">@gmail.com</button>
                     </div>
                 </div>
-                <p style="margin: 2px;">
+                <!-- <p style="margin: 2px;">
                     <strong class="strong-label">Preauth:</strong>
-                    <input type="checkbox" v-model="preauth_flag" disabled> <!-- disabled for now -->
-                </p>
+                    <input type="checkbox" v-model="preauth_flag" disabled>
+                </p> -->
                 <div style="margin: 2px;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">OrderDesc:</strong>
                         <input type="text" class="simple-input" v-model="orderdesc">
                     </div>
@@ -176,7 +177,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">Card:</strong>
                         <input type="checkbox" v-model="isCard">
                     </div>
@@ -184,7 +185,7 @@
                             v-model="card"></textarea></div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">credentialOnFile:</strong>
                         <input type="checkbox" v-model="isCredentialOnFile">
                     </div>
@@ -203,7 +204,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">billToCustomer:</strong>
                         <input type="checkbox" v-model="isBillToCustomer">
                     </div>
@@ -212,7 +213,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">billingAddress:</strong>
                         <input type="checkbox" v-model="isBillingAddress">
                     </div>
@@ -221,20 +222,20 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">threeDsData:</strong>
                         <input type="checkbox" v-model="isThreeDsData">
                     </div>
                     <div v-if="isThreeDsData"><textarea class="custom-height" name="threeDsData" id="threeDsData"
                             v-model="threeDsData"></textarea>
-                        <div>
+                        <div class="simple-wrapper">
                             <button class="cof-button" @click="seEci07()">ECI=07/04</button>
                             <button class="cof-button" @click="seEci05()">ECI=05/02</button>
                         </div>
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">threeDsPolicy:</strong>
                         <input type="checkbox" v-model="isThreeDsPolicy">
                     </div>
@@ -249,7 +250,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">browserInfo:</strong>
                         <input type="checkbox" v-model="isBrowserInfo">
                     </div>
@@ -258,7 +259,7 @@
                     </div>
                 </div>
                 <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <div>
+                    <div class="simple-wrapper">
                         <strong class="strong-label">tokenData:</strong>
                         <input type="checkbox" v-model="isTokenData">
                     </div>
@@ -281,39 +282,45 @@
                     </div>
                 </div>
                 <hr style="opacity: .2; margin: 10px;">
-                <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters</h3>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">Template:</strong>
-                    <input type="text" class="simple-input" v-model="template">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">CCTemplate:</strong>
-                    <input type="text" class="simple-input" v-model="cctemplate">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">Pay Types:</strong>
-                    <input type="text" class="simple-input" v-model="hpppaytypes">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">Language:</strong>
-                    <input type="text" class="simple-input" v-model="language">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">CustomField1:</strong>
-                    <input type="text" class="simple-input" v-model="customfield1">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">CustomField2:</strong>
-                    <input type="text" class="simple-input" v-model="customfield2">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">CustomField3:</strong>
-                    <input type="text" class="simple-input" v-model="customfield3">
-                </p>
-                <p style="margin: 2px;">
-                    <strong class="strong-label">CustomField4:</strong>
-                    <input type="text" class="simple-input" v-model="customfield4">
-                </p>
+                <div style="display: flex; align-items: baseline; gap:7px; margin-bottom: 5px;">
+                    <h3 style="color: #1e5582; font-weight: 600;">Unencrypted parameters</h3>
+                    <button style="border: none; background: none; cursor: pointer; padding: 0; margin: 0; font-weight: 600; color: blue;"
+                        @click="showUnencryptedParamsDiv = !showUnencryptedParamsDiv">{{ buttonLabel }}</button>
+                </div>
+                <div v-if="showUnencryptedParamsDiv" style="display: contents;">
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">Template:</strong>
+                        <input type="text" class="simple-input" v-model="template">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">CCTemplate:</strong>
+                        <input type="text" class="simple-input" v-model="cctemplate">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">Pay Types:</strong>
+                        <input type="text" class="simple-input" v-model="hpppaytypes">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">Language:</strong>
+                        <input type="text" class="simple-input" v-model="language">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">CustomField1:</strong>
+                        <input type="text" class="simple-input" v-model="customfield1">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">CustomField2:</strong>
+                        <input type="text" class="simple-input" v-model="customfield2">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">CustomField3:</strong>
+                        <input type="text" class="simple-input" v-model="customfield3">
+                    </p>
+                    <p class="simple-wrapper">
+                        <strong class="strong-label">CustomField4:</strong>
+                        <input type="text" class="simple-input" v-model="customfield4">
+                    </p>
+                </div>
                 <div style="margin: 2px;">
                     <div class="only-text-align">
                         <button v-if="this.auth.merchantid && this.auth.bf_password" @click="encryptData(plaintext)"
@@ -323,7 +330,7 @@
                 </div>
             </div>
         </div>
-        <div class="wrapper narrower">
+        <div class="wrapper">
             <p style="margin: 2px;">
                 <strong class="strong-label">Plain text:</strong>
                 <textarea readonly name="" id="" :rows="rows(plaintext)">{{ plaintext }}</textarea>
@@ -337,36 +344,29 @@
                 <textarea v-if="encrypted_data" name="" id=""
                     :rows="rows(encrypted_data)">{{ encrypted_data }}</textarea>
             </p>
-        </div>
-        <div style="margin: 0;">
-            <div class="wrapper wider">
-                <h3 style="color: #1e5582; font-weight: 600;">Payment request (click on the button below to open in a
-                    new
-                    tab)</h3>
-                <div style="margin: 2px; display: flex; flex-direction: column;">
-                    <strong class="strong-label">{{ this.paytype }}:</strong>
+            <div style="margin: 0;">
+                <h3 style="color: #1e5582; font-weight: 600;">Payment request (click to open in a new tab)</h3>
+                <div style="margin: 2px; display: flex; flex-direction: column; gap: 5px;">
+                    <strong>{{ this.paytype }}:</strong>
                     <div style="display: flex; align-items: center;">
                         <p class="redirect-url">{{ testurl_ohne_data }}</p>
-                        <a class="payment-url-button" v-if="isDataEncrypted" :href=testurl target="_blank">Call {{
+                        <a class="payment-url-button" v-if="isDataEncrypted" :href=testurl target="_blank"><span>Call</span> {{
                             this.paytype }}</a>
                     </div>
-                    <div style="align-items: center; display: flex;" v-if="isDataEncrypted">
+                    <div class="simple-wrapper" v-if="isDataEncrypted">
                         <canvas ref="qrcodeCanvas"></canvas>
-                        <p v-if="!this.isQRCodeGenerated" style="margin-right: 10px; font-size: 14px; color: #1e5582">Or
+                        <p v-if="!this.isQRCodeGenerated" style="display: flex; font-size: 12px; color: #1e5582">Or
                             generate QR code with payment URL:</p>
                         <button class="simpler-button" @click="generateQR()" v-if="!this.isQRCodeGenerated">Generate QR
                             code</button>
                     </div>
                 </div>
-            </div>
-            <div v-if="isDataEncrypted" class="wrapper wider">
+            <!-- <div v-if="isDataEncrypted" class="wrapper wider">
                 <h3 style="color: #1e5582; font-weight: 600;">Embedded in iframe:</h3>
                 <iframe :src="testurl" width="750" height="650" ref="paymentIframe" @load="onIframeLoad"></iframe>
-            </div>
-            <div class="wrapper wider">
-                <p>Quick requests</p>
-                <button class="simple-button" @click="quickhpp">HPP</button>
-            </div>
+            </div> -->
+        </div>
+        </div>
         </div>
     </div>
     <LoginModal />
@@ -448,6 +448,7 @@ export default {
             tokenData: '{"eci":"07","tokenCryptogram":"AgAAAAAAAIR8CQrXcIhbQAAAAAA=","tokenRequestorID":"40000000082","tokenRequestor":"Computop Nebo"}',
             isArticleList: false,
             isOrderItem: false,
+            showUnencryptedParamsDiv: false,
         }
     },
     components: {
@@ -770,6 +771,9 @@ export default {
 
             }
             return base_url
+        },
+        buttonLabel() {
+            return this.showUnencryptedParamsDiv ? 'Hide...' : 'Show more...'
         }
     },
     methods: {
@@ -948,51 +952,26 @@ export default {
 <style scoped>
 .main-wrapper {
     display: flex;
-    width: 2000px;
     margin: auto;
-    gap: 20px;
     margin-top: 10px;
     position: relative;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .wrapper {
     background-color: white;
     margin: auto;
-    width: 700px;
     padding: 20px;
     padding-top: 10px;
     border-radius: 10px;
     margin-top: 0;
     margin-bottom: 20px;
-}
-
-.info-div-wrapper {
     width: 100%;
-    background-color: #a5f729;
-    display: flex;
-    margin: auto;
-    text-align: center;
 }
 
-.info-div {
-    width: 2000px;
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    text-align: center;
-}
-
-.home-view-debug {
-    background-color: yellow;
-}
-
-.narrower {
-    width: 520px;
-    margin-left: 0;
-}
-
-.wider {
-    width: 750px;
+.parameters {
+    margin-top: 10px;
 }
 
 select {
@@ -1006,14 +985,13 @@ select {
 }
 
 textarea {
-    width: 500px;
-    /* height: 200px; */
     resize: none;
     border-radius: 10px;
     outline: none;
     padding: 5px;
     border: 1px solid;
     border-color: #d4d4d4;
+    width: 100%;
 }
 
 .custom-height {
@@ -1021,7 +999,7 @@ textarea {
 }
 
 .simple-input {
-    padding: 4px;
+    padding: 3px;
     border-radius: 5px;
     border: 1px solid;
     border-color: #d4d4d4;
@@ -1085,21 +1063,24 @@ textarea {
 }
 
 .redirect-url {
-    width: 700px;
+    width: 400px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 12px;
+    display: inline;
 }
 
 .payment-url-button {
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     color: #1e5582;
     background-color: #a5f729;
-    padding: 5px 15px;
+    padding: 5px 10px;
     border-radius: 5px;
+    display: flex;
+    gap: 4px;
 }
 
 .generate-button {
@@ -1126,11 +1107,6 @@ textarea {
     font-size: 12px;
     cursor: pointer;
     padding: 2px 7px 2px 7px;
-}
-
-iframe {
-    border: none;
-    border-radius: 5px;
 }
 
 .cof-button {
@@ -1173,21 +1149,17 @@ iframe {
     margin-left: 60px;
 }
 
-canvas {
-    height: 0;
-    width: 0;
-    background-color: red;
-    text-align: left;
-}
-
-.only-height {
-    height: 100px;
-    margin-top: 4px;
+.simple-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
 }
 
 .strong-label {
-    display: inline-block;
-    width: 200px;
+    width: 160px;
+    text-align: right;
     user-select: none;
+    font-size: 14px;
 }
 </style>

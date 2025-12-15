@@ -273,7 +273,7 @@
                             class="qm-tooltip">?</strong></strong>
                     <input type="checkbox" v-model="isOtherParameters">
                     <div v-if="isOtherParameters">
-                        <textarea class="only-height" type="text" v-model="otherparams" placeholder=""></textarea>
+                        <textarea class="only-height" type="text" v-model="otherparams" :rows="this.otherparams.length / 75" placeholder=""></textarea>
                         <div style="display: flex; margin-top: 4px; justify-content: center;">
                             <button class="show-all-button" @click="isParametersModal = true">Show all
                                 parameters</button>

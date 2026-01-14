@@ -1,14 +1,6 @@
 <template>
-    <div class="navbar-wrapper">
-    <ul class="navbar">
-        <li><router-link to="/">Encryption</router-link></li>
-        <li><router-link to="/decrypt">Decryption</router-link></li>
-        <li><router-link to="/other">Other actions</router-link></li>
-    </ul>
-</div>
-</template>
 
-<script></script>
+</template>
 
 <style scoped>
 a {
@@ -17,6 +9,7 @@ a {
     width: 150px;
     display: flex;
 }
+
 .navbar-wrapper {
     margin: auto;
     margin-top: 10px;
@@ -42,6 +35,4 @@ li {
 li:hover {
     text-decoration: underline;
 }
-
-
 </style>

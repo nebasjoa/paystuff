@@ -1,37 +1,19 @@
 <template>
-    <div style="width: 100%; background-color: #141932; display: flex;">
-        <div style="width: 2000px; margin: auto; display: flex; padding: 10px 0;">
-            <div>
+    <div style="width: 100%; background-color: #141932; display: flex; align-items: center; justify-content: flex-start;">
+        <div style="margin: 0; padding: 10px 0;">
+            <div style="margin: 0;">
                 <a href="/" target="_blank"><img src="@/assets/images/logo/Logo.svg" width="60%" alt=""></a>
             </div>
-            <div v-if="auth.isAuthenticated" class="header-wrapper">
-                User:
-                {{ this.auth.getUsername }}
-                <button class="logout-button" @click="logout">Logout</button>
-            </div>
+        </div>
+        <div class="navbar-wrapper">
+            <ul class="navbar">
+                <li><router-link to="/">Encryption</router-link></li>
+                <li><router-link to="/decrypt">Decryption</router-link></li>
+                <li><router-link to="/other">Other actions</router-link></li>
+            </ul>
         </div>
     </div>
-    <!-- <div class="debug">
-    {{ auth.getMerchantid }}<span>/</span>{{ auth.getBfpassword }}
-</div> -->
 </template>
-
-<script>
-import useAuthStore from '@/stores/auth';
-export default {
-    data() {
-        return {
-            auth: useAuthStore(),
-        }
-    },
-    methods: {
-        logout() {
-            this.auth.isAuthenticated = false
-            this.auth.bf_password = null
-        }
-    }
-}
-</script>
 
 <style scoped>
 .header-wrapper {
@@ -60,5 +42,34 @@ export default {
     position: absolute;
     color: white;
     top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    width: 150px;
+    display: flex;
+}
+
+.navbar-wrapper {
+    margin: 0;
+    text-align: center;
+    display: flex;
+}
+
+.navbar {
+    display: flex;
+    list-style: none;
+    margin: auto;
+}
+
+li {
+    width: 120px;
+    color: white;
+    text-align: center;
+}
+
+li:hover {
+    text-decoration: underline;
 }
 </style>

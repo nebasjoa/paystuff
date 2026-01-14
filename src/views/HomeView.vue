@@ -1,15 +1,5 @@
 <template>
     <Header />
-    <!-- <div class="info-div-wrapper">
-        <div class="info-div">
-            REST API testing tool: <span style="margin-left: 5px;"><a href="https://paygaterest.vercel.app"
-                    target="_blank">link</a></span>
-        </div>
-    </div> -->
-    <Navbar />
-    <!-- <div class="home-view-debug">
-{{ this.hmac_data }}
-</div> -->
     <div class="main-wrapper" @mousedown="handleParentClick">
         <div style="display: flex; margin: auto; gap: 20px; width: 100%;">
         <div class="wrapper">
@@ -369,7 +359,7 @@
         </div>
         </div>
     </div>
-    <LoginModal />
+    <!-- <LoginModal /> -->
     <ParametersModal v-show="isParametersModal" @close="isParametersModal = false" ref="menu"
         @setparameter="handleReceivedParameter" />
 </template>
@@ -377,7 +367,7 @@
 <script>
 import CryptoJS from "crypto-js";
 import Navbar from '@/components/Navbar.vue'
-import LoginModal from "@/components/LoginModal.vue";
+// import LoginModal from "@/components/LoginModal.vue";
 import Header from "@/components/Header.vue";
 import ParametersModal from "@/components/ParametersModal.vue";
 import useAuthStore from '@/stores/auth.js'
@@ -454,7 +444,7 @@ export default {
     components: {
         Header,
         Navbar,
-        LoginModal,
+        // LoginModal,
         ParametersModal
     },
     computed: {
@@ -903,7 +893,6 @@ export default {
     },
     mounted() {
         this.generate_transid()
-        // this.auth.$reset();
     },
     watch: {
         paytype() {
@@ -953,7 +942,7 @@ export default {
 .main-wrapper {
     display: flex;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 20px;
     position: relative;
     width: 100%;
     max-width: 1200px;
